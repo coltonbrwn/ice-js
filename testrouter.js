@@ -1,5 +1,5 @@
-var Ice = require('./ice.js');
-var Router = new Ice.Router;
+var IceRouter = require('./lib/classes/router.js');
+var Router = new IceRouter;
 
 Router.path('/', function(page){
   page.render('lol');

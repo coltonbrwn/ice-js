@@ -1,9 +1,8 @@
 
-require('node-jsx').install({extension: '.jsx'});
-
 var express = require('express'),
     Page = require('./lib/serverPage.js'),
-    init = require('./lib/init.js');
+    initServer = require('./lib/initServer.js'),
+    initClient = require('./lib/initClient.js');
 
 module.exports = {
 
@@ -18,8 +17,10 @@ module.exports = {
   Router: require('./lib/classes/router.js'),
 
   server: function(){
-   return init.server.call(this);
+    return initServer.call(this);
   },
 
-  client: require('./lib/init.js').client.bind(this)
+  client: function(){
+    return initClient.call(this);
+  }
 }
