@@ -23,6 +23,8 @@
   "homepage": "https://github.com/coltonTB/ice-js",
   "dependencies": {
     "backbone": "^1.1.2",
+    "express": "^4.12.3",
+    "node-jsx": "^0.12.4",
     "react": "^0.13.2",
     "sharify": "^0.1.6"
   }
