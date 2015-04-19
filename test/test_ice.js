@@ -1,5 +1,5 @@
 var express = require('express'),
-    Ice = require('../ice.js'),
+    Ice = require('ice-js'),
     path = require('path');
 
 Ice.configure({

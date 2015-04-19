@@ -25,7 +25,7 @@ Ice.prototype = {
 
   Model: require('./lib/classes/model.js'),
 
-  Colletion: require('./lib/classes/collection.js'),
+  Collection: require('./lib/classes/collection.js'),
 
   server: function(){
     return initServer.call(this);

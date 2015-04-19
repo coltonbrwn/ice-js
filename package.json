@@ -23,6 +23,7 @@
   "homepage": "https://github.com/coltonTB/ice-js",
   "dependencies": {
     "backbone": "^1.1.2",
+    "backbone-super-sync": "0.0.22",
     "callsite": "^1.0.0",
     "express": "^4.12.3",
     "gulp": "^3.8.11",
