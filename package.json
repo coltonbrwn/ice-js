@@ -1,0 +1,29 @@
+{
+  "name": "ice-js",
+  "version": "1.0.0",
+  "description": "An tool for easily building isomorphic javascript applications on top of Backbone and React",
+  "main": "ice.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/coltonTB/ice-js"
+  },
+  "keywords": [
+    "isomorphic",
+    "react",
+    "backbone"
+  ],
+  "author": "Colton Brown",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/coltonTB/ice-js/issues"
+  },
+  "homepage": "https://github.com/coltonTB/ice-js",
+  "dependencies": {
+    "backbone": "^1.1.2",
+    "react": "^0.13.2",
+    "sharify": "^0.1.6"
+  }
+}
