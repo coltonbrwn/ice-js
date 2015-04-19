@@ -11,6 +11,8 @@ gulp.task('browserify', function() {
     .pipe(gulp.dest('./build'))
 });
 
-
+gulp.task('watch', function(){
+  gulp.watch(['./**/*.coffee', './**/*.js', './**/*.jsx', '!./node_modules/**/*.js', '!./build/**/*.js'], ['browserify']);
+});
 
 gulp.task('default', ['browserify']);
