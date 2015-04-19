@@ -4,7 +4,7 @@
   "description": "An tool for easily building isomorphic javascript applications on top of Backbone and React",
   "main": "ice.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/test_ice.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
   "homepage": "https://github.com/coltonTB/ice-js",
   "dependencies": {
     "backbone": "^1.1.2",
+    "callsite": "^1.0.0",
     "express": "^4.12.3",
     "gulp": "^3.8.11",
     "gulp-browserify": "^0.5.1",
