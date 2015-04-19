@@ -1,1 +1,1 @@
-require('./lib/classes/router.js')
+module.exports = require('./lib/classes/router.js')
