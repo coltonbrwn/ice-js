@@ -33,7 +33,20 @@ Ice.prototype = {
 
   client: function(){
     return initClient.call(this);
-  }
+  },
+
+  gulp: function(){
+    var gulp = require('gulp'),
+        browserify = require('gulp-browserify');
+
+    return gulp.src('./lib/client.js')
+      .pipe(browserify({
+        insertGlobals: true,
+        fullPaths: true, 
+        transform: ['reactify']
+      }))
+      .pipe(gulp.dest('./build')) 
+    }
 }
 
 module.exports = new Ice;
