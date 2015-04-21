@@ -86,11 +86,11 @@ var error = React.createClass({displayName: "error",
 module.exports = error;
 
 }).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/error.jsx","/")
-},{"1YiZ5S":"/Users/colton/Development/ice-js/node_modules/gulp-browserify/node_modules/browserify/node_modules/process/browser.js","buffer":"/Users/colton/Development/ice-js/node_modules/gulp-browserify/node_modules/browserify/node_modules/buffer/index.js","react":"/Users/colton/Development/ice-js/node_modules/react/react.js"}],"/Users/colton/Development/ice-js/lib/fake_770db1d9.js":[function(require,module,exports){
+},{"1YiZ5S":"/Users/colton/Development/ice-js/node_modules/gulp-browserify/node_modules/browserify/node_modules/process/browser.js","buffer":"/Users/colton/Development/ice-js/node_modules/gulp-browserify/node_modules/browserify/node_modules/buffer/index.js","react":"/Users/colton/Development/ice-js/node_modules/react/react.js"}],"/Users/colton/Development/ice-js/lib/fake_2f7f6b99.js":[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 require('./initClient.js')();
 
-}).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_770db1d9.js","/")
+}).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_2f7f6b99.js","/")
 },{"./initClient.js":"/Users/colton/Development/ice-js/lib/initClient.js","1YiZ5S":"/Users/colton/Development/ice-js/node_modules/gulp-browserify/node_modules/browserify/node_modules/process/browser.js","buffer":"/Users/colton/Development/ice-js/node_modules/gulp-browserify/node_modules/browserify/node_modules/buffer/index.js"}],"/Users/colton/Development/ice-js/lib/htmlBoilerplate.jsx":[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var React   = require('react'),
@@ -33909,4 +33909,4 @@ var bootstrapOnClient = module.exports.bootstrapOnClient = function() {
 bootstrapOnClient();
 
 }).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../node_modules/sharify/index.js","/../node_modules/sharify")
-},{"1YiZ5S":"/Users/colton/Development/ice-js/node_modules/gulp-browserify/node_modules/browserify/node_modules/process/browser.js","buffer":"/Users/colton/Development/ice-js/node_modules/gulp-browserify/node_modules/browserify/node_modules/buffer/index.js"}]},{},["/Users/colton/Development/ice-js/lib/fake_770db1d9.js"])
+},{"1YiZ5S":"/Users/colton/Development/ice-js/node_modules/gulp-browserify/node_modules/browserify/node_modules/process/browser.js","buffer":"/Users/colton/Development/ice-js/node_modules/gulp-browserify/node_modules/browserify/node_modules/buffer/index.js"}]},{},["/Users/colton/Development/ice-js/lib/fake_2f7f6b99.js"])
