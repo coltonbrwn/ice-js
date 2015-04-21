@@ -10,8 +10,13 @@ var express = require('express'),
 
 var Ice = function(){
   var configFile;
-  if(configFile = fs.readFileSync('../../ice-config.json')){
-    this.config = JSON.parse(configFile.toString());
+  this.config = {};
+  if(configFile = fs.readFileSync(__dirname+'/../../ice-config.json')){
+    configObj = JSON.parse(configFile.toString());
+    this.config.routerPath = __dirname+'/../../'+configObj.routerPath;
+    this.config.buildDir   = __dirname+'/../../'+configObj.buildDir;
+  }else{
+    throw 'no config found'
   }
 }
 
@@ -43,14 +48,19 @@ Ice.prototype = {
     var gulp = require('gulp'),
         browserify = require('gulp-browserify');
 
-    return gulp.src('./lib/client.js')
-      .pipe(browserify({
-        insertGlobals: true,
-        fullPaths: true, 
-        transform: ['reactify']
-      }))
-      .pipe(gulp.dest('./build')) 
-    }
+    return function(){
+      var buildDir = this.config.buildDir;
+      return gulp.src(__dirname+'/lib/client.js')
+        .pipe(browserify({
+          insertGlobals: true,
+          fullPaths: true, 
+          transform: ['reactify']
+        }))
+        .pipe(gulp.dest(this.config.buildDir));
+
+    }.bind(this);
+  }
+  
 }
 
 module.exports = new Ice;
