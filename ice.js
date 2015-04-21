@@ -2,13 +2,17 @@ require('node-jsx').install({extension: '.jsx'});
 
 var express = require('express'),
     path = require('path'),
+    fs = require('fs'),
     callsite = require('callsite'),
     initServer = require('./lib/initServer.js'),
     initClient = require('./lib/initClient.js');
 
 
 var Ice = function(){
-  this.config = {};
+  var configFile;
+  if(configFile = fs.readFileSync('../../ice-config.json')){
+    this.config = JSON.parse(configFile.toString());
+  }
 }
 
 Ice.prototype = {
