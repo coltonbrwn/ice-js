@@ -1,1 +1,1 @@
-return require('./lib/classes/model.js');
+module.exports = require('./lib/classes/model.js');
