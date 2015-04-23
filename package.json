@@ -1,6 +1,6 @@
 {
   "name": "ice-js",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "An tool for easily building isomorphic javascript applications on top of Backbone and React",
   "main": "ice.js",
   "scripts": {
@@ -30,6 +30,7 @@
     "node-jsx": "^0.12.4",
     "react": "^0.13.2",
     "reactify": "^1.1.0",
-    "sharify": "^0.1.6"
+    "sharify": "^0.1.6",
+    "vinyl-source-stream": "^1.1.0"
   }
 }
