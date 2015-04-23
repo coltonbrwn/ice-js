@@ -16,7 +16,7 @@ var Index = React.createClass({
 
           <div id="scripts">
             <script dangerouslySetInnerHTML={{ __html: "window.__sharifyData = " + JSON.stringify(this.props.sd) }} />
-            <script src="/ice-assets/client.js" />
+            <script src="/ice-assets/bundle.js" />
           </div>
 
         </body>
