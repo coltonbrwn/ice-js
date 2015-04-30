@@ -1,13 +1,14 @@
-var express = require('express'),
-    browserify = require('browserify'),
-    source = require('vinyl-source-stream');
 
 module.exports = {
 
-  server: function(opts){
-    this.routerPath = opts.routerPath;
-    return require('./lib/initServer').call(this);
-  }
+  Router: require('./classes/Router'),
 
+  Model: require('./classes/Model'),
+
+  Collection: require('./classes/Collection'),
+
+  Page: require('./classes/Page'),
+
+  History: require('./classes/History')
 
 };

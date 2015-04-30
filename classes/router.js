@@ -1,6 +1,6 @@
-var util = require('../util.js'),
-    serverRouter = require('../serverRouter.js'),
-    iceRouter = require('../iceRouter.js');
+var util = require('../lib/util.js'),
+    serverRouter = require('../lib/serverRouter.js'),
+    clientRouter = require('../lib/clientRouter.js');
 
 module.exports = Router = function(){
   this.entries = [];
@@ -22,7 +22,7 @@ Router.prototype.export = function(){
 };
 
 Router.prototype.exportClient = function(){
-  return new iceRouter(this);
+  return new clientRouter(this);
 };
 
 Router.prototype.exportServer = function(){
