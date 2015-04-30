@@ -10,6 +10,8 @@ module.exports.build = function(opts){
   }).ignore('./node_modules/ice-js/lib/serverRouter.js')
   .require(opts.routerPath, {
     expose: 'ice-router'
+  }).require('./node_modules/ice-js/ice.js', {
+    expose: 'ice-js'
   }).bundle()
     .pipe(source('bundle.js'));
 } 
