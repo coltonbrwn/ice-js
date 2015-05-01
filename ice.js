@@ -9,6 +9,8 @@ module.exports = {
 
   Page: require('./classes/Page'),
 
-  History: require('./classes/History')
+  History: require('./classes/History'),
+
+  build: require('./build.js')
 
 };

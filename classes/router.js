@@ -7,6 +7,11 @@ module.exports = Router = function(){
 };
 
 Router.prototype.path = function(path, handler){
+
+  if (typeof path !== 'string') throw 'path must be a string';
+  if (typeof handler !== 'function') throw 'handler must be a function';
+  if (path[0] !== '/') path = '/'+path;
+
   this.entries.push({
     path: path,
     handler: handler
