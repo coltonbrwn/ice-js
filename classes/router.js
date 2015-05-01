@@ -18,12 +18,11 @@ Router.prototype.path = function(path, handler){
   });
 };
 
-Router.prototype.export = function(){
-  if (util.isClient()) {
-    return this.exportClient();
-  }else if(util.isServer()){
-    return this.exportServer();
+Router.prototype.use = function(router){
+  if (router instanceof Router){
+    util.arrayMerge(this.entries, router.entries);
   }
+  return this
 };
 
 Router.prototype.exportClient = function(){
