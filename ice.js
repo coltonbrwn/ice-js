@@ -11,6 +11,8 @@ module.exports = {
 
   History: require('./classes/History'),
 
-  build: require('./build.js')
+  build: require('./lib/build.js'),
+
+  data: require('sharify').data
 
 };

@@ -1,7 +1,6 @@
 var React = require('react'),
-    Index = require('../components/htmlBoilerplate.jsx'),
-    Error = require('../components/error.jsx'),
-    sd    = require('sharify').data;
+    Index = require('../../components/htmlBoilerplate.jsx'),
+    Error = require('../../components/error.jsx');
 
 var Page = module.exports = function(params, query){
 

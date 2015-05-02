@@ -1,6 +1,6 @@
 require('node-jsx').install({extension: '.jsx'});
 
-var ServerPage = require('./serverPage.js'),
+var ServerPage = require('../Page/serverPage.js'),
     express = require('express'),
     Backbone = require('backbone');
 
