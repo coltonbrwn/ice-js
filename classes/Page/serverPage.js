@@ -1,7 +1,7 @@
 var React = require('react'),
-    Index = require('../components/htmlBoilerplate.jsx'),
-    Error = require('../components/error.jsx'),
-    util  = require('./util.js');
+    Index = require('../../components/htmlBoilerplate.jsx'),
+    Error = require('../../components/error.jsx'),
+    util  = require('../../lib/util.js');
 
 var Page = module.exports = function(_req, _res){
   this._req = _req;

@@ -1,6 +1,6 @@
 var Backbone = require('backbone'),
-    ClientPage = require('./clientPage.js'),
-    IceHistory = require('../classes/History.js'),
+    ClientPage = require('../Page/clientPage.js'),
+    IceHistory = require('../History.js'),
     pathToRegexp = require('path-to-regexp');
 
 module.exports = Backbone.Router.extend({

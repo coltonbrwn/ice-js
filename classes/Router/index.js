@@ -1,6 +1,6 @@
-var util = require('../lib/util.js'),
-    serverRouter = require('../lib/serverRouter.js'),
-    clientRouter = require('../lib/clientRouter.js');
+var util = require('../../lib/util.js'),
+    serverRouter = require('./serverRouter.js'),
+    clientRouter = require('./clientRouter.js');
 
 module.exports = Router = function(){
   this.entries = [];
