@@ -26,9 +26,6 @@ var serverRouter = module.exports = function(iceRouter){
 
   }.bind(this));
 
-  // need to set up static routes for bundle.js
-  // inside node_modules?
-
   // app.use(function(req, res){
   //   var page = new ServerPage(req, res);
   //   page.error(404);
