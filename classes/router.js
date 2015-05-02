@@ -30,6 +30,5 @@ Router.prototype.exportClient = function(){
 };
 
 Router.prototype.exportServer = function(){
-  var router = new serverRouter(this)
-  return router.init();
+  return serverRouter(this);
 }
