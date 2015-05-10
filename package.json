@@ -34,5 +34,12 @@
     "reactify": "^1.1.0",
     "sharify": "^0.1.6",
     "vinyl-source-stream": "^1.1.0"
+  },
+  "devDependencies": {
+    "jsdom": "3.x",
+    "mocha": "^2.2.4",
+    "mocha-jsdom": "^0.3.0",
+    "should": "^6.0.1",
+    "zombie": "3.x"
   }
 }
