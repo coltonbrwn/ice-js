@@ -6,8 +6,8 @@ fs = require('fs')
 class mockClient
   constructor: (@bundle) ->
 
-  visit: (url, cb) =>
-    jsdom.env
+  visit: (url, cb) ->
+    document = jsdom.env
       html: '<div id="app">test</div>'
       url: url
       src: [@bundle]
@@ -15,8 +15,10 @@ class mockClient
         FetchExternalResources: ["script"],
         ProcessExternalResources: ["script"],
         SkipExternalResources: false
+      created: (error, window) ->
+        # jsdom.getVirtualConsole(window).sendTo(console);
       done: (errors, window) ->
-        err = if errors then new Error(errors[0]) else undefined
+        err = if(errors) then new Error(errors[0]) else undefined
         cb(err, window)
 
 describe 'Test Client', ->
@@ -31,25 +33,23 @@ describe 'Test Client', ->
     dest.on 'finish', done
     builder.pipe dest
 
-  # after 'Remove bundle', (done) ->
-  #   fs.unlink('./test/test_server/bundle.js', done)
+  after 'Remove bundle', (done) ->
+    fs.unlink('./test/test_server/bundle.js', done)
 
-  # it 'Bundle should exist', ->
-  #   bundle = fs.readFileSync "#{__dirname}/test_server/bundle.js"
+  it 'Bundle should exist', ->
+    bundle = fs.readFileSync "#{__dirname}/test_server/bundle.js"
 
-  describe 'Test Routes', ->
-    client = null
+  describe 'Test routes', ->
+    window = null;
 
+    # Load a dummy page, letting bundle.js do all the rendering
+    # based on the supplied route string
     before (done) ->
       client = new mockClient(bundle)
-      done()
+      client.visit 'http://localhost:3000', (err, _window) ->
+        window = _window
+        done(err)
 
-    it '/ should be OK', (done) ->
-      client.visit 'http://localhost:3000/', (err, window) ->
-        if err then done err
-        pageText = window.document.getElementById('app').innerHTML
-        done assert.equal(pageText, 'home')
-
-
-
-
+    it 'should say home', ->
+      pageText = window.document.getElementById('app').innerHTML
+      assert.equal(pageText, 'home')
