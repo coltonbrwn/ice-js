@@ -5,12 +5,8 @@ var express = require('express'),
 var app = express();
 
 app.get('/ice-assets/bundle.js', function(req, res){
-  Ice.build({
-    routerPath: __dirname+'/router.js',
-  }).pipe(res);
+  Ice.build(router).pipe(res);
 });
-
-console.log(router.getLocation());
 
 app.use(router.exportServer());
 

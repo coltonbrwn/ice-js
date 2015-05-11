@@ -5,11 +5,13 @@ mockClient = require './helpers/mockClient'
 
 describe 'Test Client', ->
   bundle = null
+  firstChunk = null
 
   before 'Make browserify bundle', (done) ->
     @timeout 5000
-    builder = Ice.build
-      routerPath: __dirname+'/app/router.js'
+    router = require './app/router.js'
+    builder = Ice.build router
+    builder.once 'data', (chunk) -> firstChunk = chunk
     dest = fs.createWriteStream "#{__dirname}/app/bundle.js"
     dest.on 'finish', done
     builder.pipe dest
@@ -19,6 +21,16 @@ describe 'Test Client', ->
 
   it 'Bundle should exist', ->
     bundle = fs.readFileSync "#{__dirname}/app/bundle.js"
+
+  it 'Alternate build syntax produce the same bundle', (done) ->
+    @timeout 5000
+    builder = Ice.build
+      routerPath: __dirname+'/app/router.js'
+    .once 'data', (chunk) -> 
+      assert.equal(chunk.toString(), firstChunk.toString())
+      done();
+      builder.end()
+    .on 'error', (e) -> done e
 
   describe 'Test routes', ->
     client = null
