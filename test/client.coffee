@@ -15,11 +15,10 @@ class mockClient
         FetchExternalResources: ["script"],
         ProcessExternalResources: ["script"],
         SkipExternalResources: false
-      created: (error, window) ->
-        # jsdom.getVirtualConsole(window).sendTo(console);
       done: (errors, window) ->
         err = if(errors) then new Error(errors[0]) else undefined
-        cb(err, window)
+        setTimeout (-> cb(err, window)), 500
+
 
 describe 'Test Client', ->
   bundle = null
@@ -40,16 +39,19 @@ describe 'Test Client', ->
     bundle = fs.readFileSync "#{__dirname}/test_server/bundle.js"
 
   describe 'Test routes', ->
-    window = null;
+    client = null
 
-    # Load a dummy page, letting bundle.js do all the rendering
-    # based on the supplied route string
-    before (done) ->
+    before ->
       client = new mockClient(bundle)
-      client.visit 'http://localhost:3000', (err, _window) ->
-        window = _window
-        done(err)
 
-    it 'should say home', ->
-      pageText = window.document.getElementById('app').innerHTML
-      assert.equal(pageText, 'home')
+    it '/ should be OK', (done) ->
+      client.visit 'http://localhost:3000/', (err, window) ->
+        pageText = window.document.getElementById('app').innerHTML
+        assert.equal(pageText, 'home')
+        done()
+
+    it '/aux should be OK', (done) ->
+      client.visit 'http://localhost:3000/aux', (err, window) ->
+        pageText = window.document.getElementById('app').innerHTML
+        assert.equal(pageText, 'aux-ok')
+        done()

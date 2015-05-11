@@ -36,3 +36,11 @@ describe 'Test Server', ->
           app = window.document.getElementById 'app'
           assert.equal(app.innerHTML, 'home')
           done()
+
+    it '/aux should be OK', (done) ->
+      jsdom.env
+        url: 'http://localhost:3000/aux',
+        done: (errors, window) ->
+          app = window.document.getElementById 'app'
+          assert.equal(app.innerHTML, 'aux-ok')
+          done()
