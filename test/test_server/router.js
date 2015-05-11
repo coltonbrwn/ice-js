@@ -21,8 +21,6 @@ Router.path('/product/:id', function(page){
 
 });
 
-var otherRouter = require('./otherRouter.js');
-
-Router.use(otherRouter);
+Router.use(require('./auxRouter.js'));
 
 module.exports = Router;

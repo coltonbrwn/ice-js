@@ -4,7 +4,7 @@
   "description": "An tool for easily building isomorphic javascript applications on top of Backbone and React",
   "main": "ice.js",
   "scripts": {
-    "test": "node test/test_ice.js"
+    "test": "node_modules/.bin/mocha --compilers coffee:coffee-script/register ./test"
   },
   "repository": {
     "type": "git",
@@ -36,6 +36,7 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "devDependencies": {
+    "coffee-script": "^1.9.2",
     "jsdom": "3.x",
     "mocha": "^2.2.4",
     "mocha-jsdom": "^0.3.0",
