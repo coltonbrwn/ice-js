@@ -1,4 +1,4 @@
-Ice = require('../ice.js')
+Ice = require('./app/node_modules/ice-js')
 assert = require('assert')
 fs = require('fs')
 mockClient = require './helpers/mockClient'
@@ -9,8 +9,7 @@ describe 'Test Client', ->
   before 'Make browserify bundle', (done) ->
     @timeout 5000
     builder = Ice.build
-      routerPath: './test/app/router.js'
-      libRoot: '.'
+      routerPath: __dirname+'/app/router.js'
     dest = fs.createWriteStream "#{__dirname}/app/bundle.js"
     dest.on 'finish', done
     builder.pipe dest
@@ -29,12 +28,14 @@ describe 'Test Client', ->
 
     it '/ should be OK', (done) ->
       client.visit 'http://localhost:3000/', (err, window) ->
+        if err then throw err
         pageText = window.document.getElementById('app').innerHTML
         assert.equal(pageText, 'home')
         done()
 
     it '/aux should be OK', (done) ->
       client.visit 'http://localhost:3000/aux', (err, window) ->
+        if err then throw err
         pageText = window.document.getElementById('app').innerHTML
         assert.equal(pageText, 'aux-ok')
         done()

@@ -18,7 +18,18 @@ class MockClient
         ProcessExternalResources: ["script"],
         SkipExternalResources: false
       done: (errors, window) ->
-        err = if(errors) then new Error(errors[0]) else undefined
+        err = processJsdomErrors errors
         setTimeout (-> cb(err, window)), 500
 
 module.exports = MockClient
+
+
+processJsdomErrors = (errors) ->
+  if !errors then return undefined
+  err = errors
+  if errors.length?
+    err = errors[0]
+    if err.data?.error?
+      err = err.data.error
+  new Error err
+

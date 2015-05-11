@@ -42,3 +42,4 @@ describe 'Test Server', ->
           app = window.document.getElementById 'app'
           assert.equal(app.innerHTML, 'aux-ok')
           done()
+

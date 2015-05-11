@@ -1,9 +1,14 @@
 var express = require('express'),
-    router = require('./router.js');
+    router = require('./router.js'),
+    Ice = require('ice-js');
 
 var app = express();
 
-app.use('/ice-assets', express.static(__dirname));
+app.get('/ice-assets/bundle.js', function(req, res){
+  Ice.build({
+    routerPath: __dirname+'/router.js',
+  }).pipe(res);
+});
 
 app.use(router.exportServer());
 
