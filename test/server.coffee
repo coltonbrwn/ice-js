@@ -9,9 +9,7 @@ describe 'Test Server', ->
   # listening for special message to confirm success
   # 
   before (done) ->
-    child = spawn 'node', 
-      ['test/test_server/index.js'], 
-      {stdio: ['ipc']}
+    child = spawn 'node', ['test/app'], {stdio: ['ipc']}
     child.stderr.on 'data', (err) ->
       done(new Error(err))
     child.on 'message', (m) ->

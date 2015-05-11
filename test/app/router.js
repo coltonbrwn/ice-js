@@ -1,7 +1,7 @@
-var Ice = require('ice-js'),
+var IceRouter = require('ice-js').Router,
     Product  = require('./productModel.js');
 
-var Router = new Ice.Router;
+var Router = new IceRouter;
 
 Router.path('/', function(page){
   page.render('home');
