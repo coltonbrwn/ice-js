@@ -1,4 +1,5 @@
 jsdom = require('jsdom')
+dummyPage = '<div id="app">test</div>'
 
 # Wraps JSDOM for easy testing with Ice-js.
 # MockClient instances are initialized with a
@@ -6,17 +7,19 @@ jsdom = require('jsdom')
 # the application
 # 
 class MockClient
-  constructor: (@bundle) ->
+  constructor: (opts) ->
+    @jsEnabled = if opts.jsEnabled then 'script' else false
+    @bundle = opts.bundle or ''
+    @html = if @jsEnabled then dummyPage else undefined
 
   visit: (url, cb) ->
     document = jsdom.env
-      html: '<div id="app">test</div>'
+      html: @html
       url: url
       src: [@bundle]
       features:
-        FetchExternalResources: ["script"],
-        ProcessExternalResources: ["script"],
-        SkipExternalResources: false
+        FetchExternalResources: [@jsEnabled],
+        ProcessExternalResources: [@jsEnabled]
       done: (errors, window) ->
         err = processJsdomErrors errors
         setTimeout (-> cb(err, window)), 500

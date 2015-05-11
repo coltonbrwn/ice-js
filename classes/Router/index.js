@@ -1,9 +1,11 @@
 var util = require('../../lib/util.js'),
     serverRouter = require('./serverRouter.js'),
-    clientRouter = require('./clientRouter.js');
+    clientRouter = require('./clientRouter.js'),
+    stack = require('callsite');
 
 module.exports = Router = function(){
   this.entries = [];
+  this.location = stack()[1].getFileName();
 };
 
 Router.prototype.path = function(path, handler){
@@ -31,4 +33,8 @@ Router.prototype.exportClient = function(){
 
 Router.prototype.exportServer = function(){
   return serverRouter(this);
+}
+
+Router.prototype.getLocation = function(){
+  return this.location;
 }

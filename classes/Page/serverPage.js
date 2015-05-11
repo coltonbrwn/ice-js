@@ -6,8 +6,8 @@ var React = require('react'),
 var Page = module.exports = function(_req, _res){
   this._req = _req;
   this._res = _res;
-  this.params = _req.params;
-  this.query = _req.query;
+  this.params = _req.params || {};
+  this.query = _req.query || {};
   this._metadata = [];
 };
 

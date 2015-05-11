@@ -10,6 +10,8 @@ app.get('/ice-assets/bundle.js', function(req, res){
   }).pipe(res);
 });
 
+console.log(router.getLocation());
+
 app.use(router.exportServer());
 
 app.listen(3000, function(){

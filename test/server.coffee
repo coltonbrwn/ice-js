@@ -1,4 +1,4 @@
-jsdom = require('jsdom')
+mockClient = require('./helpers/mockClient')
 assert = require('assert')
 spawn = require('child_process').spawn
 
@@ -10,11 +10,10 @@ describe 'Test Server', ->
   # 
   before (done) ->
     child = spawn 'node', ['test/app'], {stdio: ['ipc']}
-    child.stderr.on 'data', (err) ->
-      done(new Error(err))
+    child.stderr.on 'error', (err) ->
+      errorReporter.emit('error', err)
     child.on 'message', (m) ->
       if m is 'listening' then done()
-
 
   # Kill the server instance when we're done with
   # server-side tests
@@ -24,22 +23,25 @@ describe 'Test Server', ->
     done();
 
 
-
   describe 'Test Routes', ->
+    client = null
+
+    before ->
+      client = new mockClient
+        jsEnabled: false
+
    
     it '/ should be OK', (done) ->
-      jsdom.env
-        url: 'http://localhost:3000',
-        done: (errors, window) ->
-          app = window.document.getElementById 'app'
-          assert.equal(app.innerHTML, 'home')
-          done()
+      client.visit 'http://localhost:3000', (err, window) ->
+        if err then throw err
+        app = window.document.getElementById 'app'
+        assert.equal(app.innerHTML, 'home')
+        done()
 
     it '/aux should be OK', (done) ->
-      jsdom.env
-        url: 'http://localhost:3000/aux',
-        done: (errors, window) ->
-          app = window.document.getElementById 'app'
-          assert.equal(app.innerHTML, 'aux-ok')
-          done()
+      client.visit 'http://localhost:3000/aux', (err, window) ->
+        if err then throw err
+        app = window.document.getElementById 'app'
+        assert.equal(app.innerHTML, 'aux-ok')
+        done()
 

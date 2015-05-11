@@ -24,18 +24,20 @@ describe 'Test Client', ->
     client = null
 
     before ->
-      client = new mockClient(bundle)
+      client = new mockClient
+        jsEnabled: true
+        bundle: bundle
 
     it '/ should be OK', (done) ->
       client.visit 'http://localhost:3000/', (err, window) ->
         if err then throw err
-        pageText = window.document.getElementById('app').innerHTML
-        assert.equal(pageText, 'home')
+        app = window.document.getElementById('app')
+        assert.equal(app.innerHTML, 'home')
         done()
 
     it '/aux should be OK', (done) ->
       client.visit 'http://localhost:3000/aux', (err, window) ->
         if err then throw err
-        pageText = window.document.getElementById('app').innerHTML
-        assert.equal(pageText, 'aux-ok')
+        app = window.document.getElementById('app')
+        assert.equal(app.innerHTML, 'aux-ok')
         done()

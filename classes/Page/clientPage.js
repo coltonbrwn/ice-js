@@ -4,9 +4,9 @@ var React = require('react'),
 
 var Page = module.exports = function(params, query){
 
-  this.params = params;
-  this.query = query;
-  
+  this.params = params || {};
+  this.query = query || {};
+  this._metadata = this._req = this._res = {}
 };
 
 Page.prototype.render = function(Component, initialProps){
@@ -25,11 +25,6 @@ Page.prototype.authorizeModel = function(model){
 };
 
 Page.prototype.meta = function(){
-  // no page meta manipulation on client
-  return this;
-};
-
-Page.prototype.title = function(){
   // no page meta manipulation on client
   return this;
 };
