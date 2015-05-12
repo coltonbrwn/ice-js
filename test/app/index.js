@@ -1,5 +1,5 @@
 var express = require('express'),
-    router = require('./router.js'),
+    router = require('./routers'),
     Ice = require('ice-js');
 
 var app = express();

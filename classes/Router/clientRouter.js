@@ -27,7 +27,7 @@ module.exports = Backbone.Router.extend({
             args = routeRegexp.exec(fragment);
 
         keys.forEach(function(key, i){
-          params[key] = args[i];
+          params[key.name] = args[i+1];
         });
 
         router.execute(callback, params, query);

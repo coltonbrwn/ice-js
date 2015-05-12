@@ -9,7 +9,7 @@ describe 'Test Client', ->
 
   before 'Make browserify bundle', (done) ->
     @timeout 5000
-    router = require './app/router.js'
+    router = require './app/routers'
     builder = Ice.build router
     builder.once 'data', (chunk) -> firstChunk = chunk
     dest = fs.createWriteStream "#{__dirname}/app/bundle.js"
@@ -22,10 +22,10 @@ describe 'Test Client', ->
   it 'Bundle should exist', ->
     bundle = fs.readFileSync "#{__dirname}/app/bundle.js"
 
-  it 'Alternate build syntax produce the same bundle', (done) ->
+  it 'Alternate build syntax produces the same bundle', (done) ->
     @timeout 5000
     builder = Ice.build
-      routerPath: __dirname+'/app/router.js'
+      routerPath: __dirname+'/app/routers'
     .once 'data', (chunk) -> 
       assert.equal(chunk.toString(), firstChunk.toString())
       done();
@@ -40,24 +40,66 @@ describe 'Test Client', ->
         jsEnabled: true
         bundle: bundle
         basePath: 'http://localhost:3000'
+        # consoleObj: console
 
     it '/ should be OK', (done) ->
       client.visit '/', (err, window) ->
         if err then throw err
         app = window.document.getElementById('app')
-        assert.equal(app.innerHTML, 'home')
-        done()
+        done assert.equal(app.innerHTML, 'home')
 
-    it '/aux should be OK', (done) ->
+    it 'auxiliary router should be registered', (done) ->
       client.visit '/aux', (err, window) ->
         if err then throw err
         app = window.document.getElementById('app')
-        assert.equal(app.innerHTML, 'aux-ok')
-        done()
+        done assert.equal(app.innerHTML, 'aux-ok')
 
-    it '/aux2 should be OK', (done) ->
+    it 'second auxiliary router should be registered', (done) ->
       client.visit '/aux2', (err, window) ->
         if err then throw err
         app = window.document.getElementById('app')
-        assert.equal(app.innerHTML, 'aux2-ok')
-        done()
+        done assert.equal(app.innerHTML, 'aux2-ok')
+
+    describe 'parameterized routes', ->
+      tests = [
+        {path: '/concat/hello/world', result: 'helloworld'},
+        {path: '/concat/123/456', result: '123456'},
+        {path: '/concat2/see/spot/run', result: 'seerun'},
+        {path: '/concat2/hi/friend', result: 'hifriend'},
+      ].forEach (test) ->
+        it "#{test.path} should render #{test.result}", (done) ->
+          client.visit test.path, (err, window) ->
+            if err then throw err
+            app = window.document.getElementById('app')
+            done assert.equal(app.innerHTML, test.result)
+
+    describe 'glob routes', ->
+      tests = [
+        {path: '/abcd', status: 'ok'},
+        {path: '/abRANDOM1234cd', status: 'ok'},
+        {path: '/abcdx', status: 'test'}
+      ].forEach (test) ->
+        it "#{test.path} should be #{test.status}", (done) ->
+          client.visit "#{test.path}", (err, window) ->
+            if err then throw err
+            app = window.document.getElementById('app')
+            done assert.equal(app.innerHTML, test.status)
+
+    describe 'regex routes', ->
+      tests = [
+        {path: '/fly', status: 'ok'},
+        {path: '/zyxfly', status: 'ok'},
+        {path: '/superflyflyz', status: 'test'}
+      ].forEach (test) ->
+        it "#{test.path} should render '#{test.status}'", (done) ->
+          client.visit "#{test.path}", (err, window) ->
+            if err then throw err
+            app = window.document.getElementById('app')
+            done assert.equal(app.innerHTML, test.status)
+
+    it "parameters should work", (done) ->
+      client.visit "/concat/hello/world", (err, window) ->
+        if err then throw err
+        app = window.document.getElementById('app')
+        done assert.equal(app.innerHTML, 'helloworld')
+

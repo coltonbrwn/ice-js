@@ -4,7 +4,7 @@ Backbone = require('backbone')
 express = require('express')
 assertExtends = require('./helpers/assertExtends');
 
-describe 'Test Router', ->
+describe 'Test Router class', ->
   router = null
 
   beforeEach ->

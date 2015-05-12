@@ -14,10 +14,10 @@ var serverRouter = module.exports = function(iceRouter){
 
   iceRouter.entries.forEach(function(entry){
 
-    var pathString = entry.path;
+    var path = entry.path;
     var handlerFn  = entry.handler;
 
-    router.get(pathString, (function(handler){
+    router.get(path, (function(handler){
       return function(req, res, next){
         var page = new ServerPage(req, res);
         handler.call(this.router, page);
