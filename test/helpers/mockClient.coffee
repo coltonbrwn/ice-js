@@ -1,4 +1,5 @@
-jsdom = require('jsdom')
+jsdom = require 'jsdom'
+assert = require 'assert'
 dummyPage = '<div id="app">test</div>'
 
 # Wraps JSDOM for easy testing with Ice-js.
@@ -8,7 +9,8 @@ dummyPage = '<div id="app">test</div>'
 #   (string)  base Path  - for routing
 #   (object)  consoleObj - recieves the window's console.log messages 
 # 
-class MockClient
+
+module.exports = class MockClient
   constructor: (opts) ->
     @jsEnabled = if opts.jsEnabled then 'script' else false
     @html      = if @jsEnabled then dummyPage else undefined
@@ -33,7 +35,12 @@ class MockClient
         err = processJsdomErrors errors
         setTimeout (-> cb(err, window)), 500
 
-module.exports = MockClient
+  assertRender: (url, expected, done) ->
+    @visit url, (err, window) ->
+      if err then throw err
+      app = window.document.getElementById 'app'
+      done assert.equal app.innerHTML, expected
+
 
 
 processJsdomErrors = (errors) ->

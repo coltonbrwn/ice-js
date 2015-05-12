@@ -31,36 +31,31 @@ describe 'Test Server', ->
         jsEnabled: false
         basePath: 'http://localhost:3000'
    
-    it '/ should be OK', (done) ->
-      client.visit '/', (err, window) ->
-        if err then throw err
-        app = window.document.getElementById 'app'
-        done assert.equal(app.innerHTML, 'home')
+    describe 'basic routing', ->
+      it '/', (done) ->
+        client.assertRender '/', 'home', done
 
-    it '/aux should be OK', (done) ->
-      client.visit '/aux', (err, window) ->
-        if err then throw err
-        app = window.document.getElementById 'app'
-        done assert.equal(app.innerHTML, 'aux-ok')
+      it '/aux', (done) ->
+        client.assertRender '/aux', 'aux-ok', done
 
-    it '/aux2 should be OK', (done) ->
-      client.visit '/aux2', (err, window) ->
-        if err then throw err
-        app = window.document.getElementById 'app'
-        done assert.equal(app.innerHTML, 'aux2-ok')
+      it '/aux2', (done) ->
+        client.assertRender '/aux2', 'aux2-ok', done
+
 
     describe 'parameterized routes', ->
-      tests = [
-        {path: '/concat/hello/world', result: 'helloworld'},
-        {path: '/concat/123/456', result: '123456'},
-        {path: '/concat2/see/spot/run', result: 'seerun'},
-        {path: '/concat2/hi/friend', result: 'hifriend'},
-      ].forEach (test) ->
-        it "#{test.path} should render #{test.result}", (done) ->
-          client.visit test.path, (err, window) ->
-            if err then throw err
-            app = window.document.getElementById('app')
-            done assert.equal(app.innerHTML, test.result)
+      it '/concat/hello/world', (done) ->
+        client.assertRender '/concat/hello/world', 'helloworld', done
+
+      it '/concat/123/456', (done) ->
+        client.assertRender '/concat/123/456', '123456', done
+
+      it '/concat2/see/spot/run', (done) ->
+        client.assertRender '/concat2/see/spot/run', 'seerun', done
+
+      it '/concat2/hi/friend', (done) ->
+        client.assertRender '/concat2/hi/friend', 'hifriend', done
+
+
 
     describe 'glob routes', ->
       tests = [

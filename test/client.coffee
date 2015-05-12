@@ -42,64 +42,50 @@ describe 'Test Client', ->
         basePath: 'http://localhost:3000'
         # consoleObj: console
 
-    it '/ should be OK', (done) ->
-      client.visit '/', (err, window) ->
-        if err then throw err
-        app = window.document.getElementById('app')
-        done assert.equal(app.innerHTML, 'home')
+    describe 'basic routing', ->
+      it '/', (done) ->
+        client.assertRender '/', 'home', done
 
-    it 'auxiliary router should be registered', (done) ->
-      client.visit '/aux', (err, window) ->
-        if err then throw err
-        app = window.document.getElementById('app')
-        done assert.equal(app.innerHTML, 'aux-ok')
+      it '/aux', (done) ->
+        client.assertRender '/aux', 'aux-ok', done
 
-    it 'second auxiliary router should be registered', (done) ->
-      client.visit '/aux2', (err, window) ->
-        if err then throw err
-        app = window.document.getElementById('app')
-        done assert.equal(app.innerHTML, 'aux2-ok')
+      it '/aux2', (done) ->
+        client.assertRender '/aux2', 'aux2-ok', done
+
 
     describe 'parameterized routes', ->
-      tests = [
-        {path: '/concat/hello/world', result: 'helloworld'},
-        {path: '/concat/123/456', result: '123456'},
-        {path: '/concat2/see/spot/run', result: 'seerun'},
-        {path: '/concat2/hi/friend', result: 'hifriend'},
-      ].forEach (test) ->
-        it "#{test.path} should render #{test.result}", (done) ->
-          client.visit test.path, (err, window) ->
-            if err then throw err
-            app = window.document.getElementById('app')
-            done assert.equal(app.innerHTML, test.result)
+      it '/concat/hello/world', (done) ->
+        client.assertRender '/concat/hello/world', 'helloworld', done
+        
+      it '/concat/123/456', (done) ->
+        client.assertRender '/concat/123/456', '123456', done
+        
+      it '/concat2/see/spot/run', (done) ->
+        client.assertRender '/concat2/see/spot/run', 'seerun', done
+        
+      it '/concat2/hi/friend', (done) ->
+        client.assertRender '/concat2/hi/friend', 'hifriend', done
+        
 
     describe 'glob routes', ->
-      tests = [
-        {path: '/abcd', status: 'ok'},
-        {path: '/abRANDOM1234cd', status: 'ok'},
-        {path: '/abcdx', status: 'test'}
-      ].forEach (test) ->
-        it "#{test.path} should be #{test.status}", (done) ->
-          client.visit "#{test.path}", (err, window) ->
-            if err then throw err
-            app = window.document.getElementById('app')
-            done assert.equal(app.innerHTML, test.status)
+      it '/abcd', (done) ->
+        client.assertRender '/abcd', 'ok', done
+
+      it '/abRANDOM1234cd', (done) ->
+        client.assertRender '/abRANDOM1234cd', 'ok', done
+
+      it '/abcdx', (done) ->
+        client.assertRender '/abcdx', 'test', done
+
 
     describe 'regex routes', ->
-      tests = [
-        {path: '/fly', status: 'ok'},
-        {path: '/zyxfly', status: 'ok'},
-        {path: '/superflyflyz', status: 'test'}
-      ].forEach (test) ->
-        it "#{test.path} should render '#{test.status}'", (done) ->
-          client.visit "#{test.path}", (err, window) ->
-            if err then throw err
-            app = window.document.getElementById('app')
-            done assert.equal(app.innerHTML, test.status)
+      it '/fly', (done) ->
+        client.assertRender '/fly', 'ok', done
 
-    it "parameters should work", (done) ->
-      client.visit "/concat/hello/world", (err, window) ->
-        if err then throw err
-        app = window.document.getElementById('app')
-        done assert.equal(app.innerHTML, 'helloworld')
+      it '/zyxfly', (done) ->
+        client.assertRender '/zyxfly', 'ok', done
+
+      it '/superflyflyz', (done) ->
+        client.assertRender '/superflyflyz', 'test', done
+
 
