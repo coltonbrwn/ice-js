@@ -1,6 +1,6 @@
 var Backbone = require('backbone'),
     url = require('url'),
-    querystring = require('querystring'),
+    querystring = require('express/node_modules/qs'),
     _ = require('backbone/node_modules/underscore');
 
 module.exports = _.extend(Backbone.history, {
