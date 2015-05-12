@@ -9,13 +9,16 @@ dummyPage = '<div id="app">test</div>'
 class MockClient
   constructor: (opts) ->
     @jsEnabled = if opts.jsEnabled then 'script' else false
-    @bundle = opts.bundle or ''
-    @html = if @jsEnabled then dummyPage else undefined
+    @html      = if @jsEnabled then dummyPage else undefined
+    @bundle    = opts.bundle   or ''
+    @basePath  = opts.basePath or ''
+    return
 
   visit: (url, cb) ->
+    if url[0] isnt '/' then url = "#/{url}"
     document = jsdom.env
       html: @html
-      url: url
+      url: @basePath + url
       src: [@bundle]
       features:
         FetchExternalResources: [@jsEnabled],

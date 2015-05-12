@@ -39,17 +39,25 @@ describe 'Test Client', ->
       client = new mockClient
         jsEnabled: true
         bundle: bundle
+        basePath: 'http://localhost:3000'
 
     it '/ should be OK', (done) ->
-      client.visit 'http://localhost:3000/', (err, window) ->
+      client.visit '/', (err, window) ->
         if err then throw err
         app = window.document.getElementById('app')
         assert.equal(app.innerHTML, 'home')
         done()
 
     it '/aux should be OK', (done) ->
-      client.visit 'http://localhost:3000/aux', (err, window) ->
+      client.visit '/aux', (err, window) ->
         if err then throw err
         app = window.document.getElementById('app')
         assert.equal(app.innerHTML, 'aux-ok')
+        done()
+
+    it '/aux2 should be OK', (done) ->
+      client.visit '/aux2', (err, window) ->
+        if err then throw err
+        app = window.document.getElementById('app')
+        assert.equal(app.innerHTML, 'aux2-ok')
         done()
