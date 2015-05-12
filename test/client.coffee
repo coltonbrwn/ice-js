@@ -88,4 +88,13 @@ describe 'Test Client', ->
       it '/superflyflyz', (done) ->
         client.assertRender '/superflyflyz', 'test', done
 
+    describe 'query parameters', ->
+      it '/query?firstname=robert&lastname=paulson', (done) ->
+        client.assertRender '/query?first=robert&last=paulson'
+          , 'his name is robert paulson', done
+
+      it '/queryMath/?a=1&b=3&c=3&d=7', (done) ->
+        client.assertRender '/queryMath/?a=1&b=3&c=3&d=7'
+          , '1337', done
+
 

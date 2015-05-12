@@ -56,23 +56,34 @@ describe 'Test Server', ->
         client.assertRender '/concat2/hi/friend', 'hifriend', done
 
 
-
     describe 'glob routes', ->
-      tests = [
-        {path: '/abcd', status: 200},
-        {path: '/abRANDOM1234cd', status: 200},
-        {path: '/abcdx', status: 404}
-      ].forEach (test) ->
-        it "#{test.path} should return #{test.status}", (done) ->
-          http.get 'http://localhost:3000'+test.path, (res) ->
-            done assert.equal(res.statusCode, test.status)
+      it '/abcd', (done) ->
+        client.assertRender '/abcd', 'ok', done
+
+      it '/abRANDOM1234cd', (done) ->
+        client.assertRender '/abRANDOM1234cd', 'ok', done
+
+      # it '/abcdx', (done) ->
+      #   client.assertRender '/abcdx', 'test', done
+
 
     describe 'regex routes', ->
-      tests = [
-        {path: '/xxxfly', status: 200},
-        {path: '/zyxflyz', status: 404}
-      ].forEach (test) ->
-        it "#{test.path} should return #{test.status}", (done) ->
-          http.get 'http://localhost:3000'+test.path, (res) ->
-            done assert.equal(res.statusCode, test.status)
+      it '/fly', (done) ->
+        client.assertRender '/fly', 'ok', done
+
+      it '/zyxfly', (done) ->
+        client.assertRender '/zyxfly', 'ok', done
+
+      # it '/superflyflyz', (done) ->
+      #   client.assertRender '/superflyflyz', 'test', done
+
+
+    describe 'query parameters', ->
+      it '/query?firstname=robert&lastname=paulson', (done) ->
+        client.assertRender '/query?first=robert&last=paulson'
+          , 'his name is robert paulson', done
+
+      it '/queryMath/?a=1&b=3&c=3&d=7', (done) ->
+        client.assertRender '/queryMath/?a=1&b=3&c=3&d=7'
+          , '1337', done
 

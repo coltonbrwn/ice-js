@@ -20,8 +20,20 @@ Router.path('/concat/:first/:second', function(page){
 });
 
 Router.path('/concat2/:first/:optional?/:last', function(page){
-  console.log(page.params)
   page.render(page.params.first+page.params.last);
 });
+
+Router.path('/query', function(page){
+  var string = 'his name is '
+    + page.query.first
+    + ' '
+    + page.query.last;
+  page.render(string);
+});
+
+Router.path('/queryMath', function(page){
+  var q = page.query;
+  page.render(q.a+q.b+q.c+q.d);
+})
 
 Router.use(require('./auxRouter.js'));
