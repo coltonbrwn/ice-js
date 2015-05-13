@@ -1,12 +1,15 @@
 var express = require('express'),
     router = require('./routers'),
-    Ice = require('ice-js');
+    Ice = require('ice-js'),
+    testAPI = require('./testAPI');
 
 var app = express();
 
 app.get('/ice-assets/bundle.js', function(req, res){
   Ice.build(router).pipe(res);
 });
+
+app.use(testAPI);
 
 app.use(router.exportServer());
 

@@ -7,10 +7,10 @@ assertExtends = require('./helpers/assertExtends');
 describe 'Test Router class', ->
   router = null
 
-  beforeEach ->
+  before ->
     router = new Router()
 
-  it 'should have all methods', ->  
+  it 'should have all ice router methods', ->  
     methods = ['path', 'use', 'exportClient', 'exportServer', 'getLocation']
     methods.forEach (method) ->
       assert.equal typeof router[method], 'function',

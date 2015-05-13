@@ -1,5 +1,4 @@
-var IceRouter = require('ice-js').Router,
-    Product  = require('../productModel.js');
+var IceRouter = require('ice-js').Router;
 
 var Router = module.exports = new IceRouter;
 

@@ -11,8 +11,7 @@ describe 'Test Server', ->
   # 
   before (done) ->
     child = spawn 'node', ['test/app'], {stdio: ['ipc']}
-    child.stderr.on 'error', (err) ->
-      errorReporter.emit('error', err)
+    child.stderr.pipe(process.stderr)
     child.on 'message', (m) ->
       if m is 'listening' then done()
 
@@ -40,6 +39,11 @@ describe 'Test Server', ->
 
       it '/aux2', (done) ->
         client.assertRender '/aux2', 'aux2-ok', done
+
+
+      it 'data api is up', (done) ->
+        http.get 'http://localhost:3000/data/artists', (res) ->
+          done assert.equal(res.statusCode, 200)
 
 
     describe 'parameterized routes', ->
