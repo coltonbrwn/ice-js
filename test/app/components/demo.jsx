@@ -2,9 +2,13 @@ var React = require('react');
 
 var Demo = React.createClass({
 
+  propTypes: {
+    collection: React.PropTypes.object.isRequired
+  },
+
   render: function() {
     return (
-      <div id="demo-inner">Hello this is a demo!</div>
+      <div>hello</div>
     );
   }
 

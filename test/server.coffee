@@ -57,13 +57,13 @@ describe 'Test Server', ->
     describe 'react component rendering', ->
       it 'synchronous react rendering', (done) ->
         client.visit '/react-sync', (err, window) ->
-          app = window.document.getElementById('demo-inner');
-          done assert.equal app.innerHTML, 'Hello this is a demo!'
+          app = window.document.getElementById('test-inner');
+          done assert.equal app.innerHTML, 'This is a react component!'
 
       it 'asynchronous react rendering', (done) ->
         client.visit '/react-async', (err, window) ->
-          app = window.document.getElementById('demo-inner');
-          done assert.equal app.innerHTML, 'Hello this is a demo!'
+          app = window.document.getElementById('test-inner');
+          done assert.equal app.innerHTML, 'This is a react component!'
 
     describe 'parameterized routes', ->
       it '/concat/hello/world', (done) ->

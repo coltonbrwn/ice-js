@@ -1,5 +1,5 @@
 var IceRouter = require('ice-js').Router,
-    Demo = require('../components/demo.jsx'),
+    Test = require('../components/Test.jsx'),
     artistsCollection = require('../artistsCollection.js');
 
 var Router = module.exports = new IceRouter;
@@ -9,16 +9,16 @@ Router.path('/', function(page){
 });
 
 Router.path('/react-async', function(page){
-  var collection = new artistsCollection
+  var collection = new artistsCollection();
   collection.fetch().then(function(){
-    page.render(Demo);
+    page.render(Test);
   }).fail(function(e){
     throw e
   }).done();
 });
 
 Router.path('/react-sync', function(page){
-  page.render(Demo);
+  page.render(Test);
 });
 
 Router.path('/ab*cd', function(page) {

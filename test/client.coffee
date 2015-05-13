@@ -9,7 +9,7 @@ describe 'Test Client', ->
 
   before 'Make browserify bundle', (done) ->
     @timeout 5000
-    router = require './app/routers'
+    router = require './app/routers/testCases.js'
     builder = Ice.build router
     builder.once 'data', (chunk) -> firstChunk = chunk
     dest = fs.createWriteStream "#{__dirname}/app/bundle.js"
@@ -25,7 +25,7 @@ describe 'Test Client', ->
   it 'Alternate build syntax produces the same bundle', (done) ->
     @timeout 5000
     builder = Ice.build
-      routerPath: __dirname+'/app/routers'
+      routerPath: __dirname+'/app/routers/testCases.js'
     .once 'data', (chunk) -> 
       assert.equal(chunk.toString(), firstChunk.toString())
       done();
