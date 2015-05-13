@@ -30,10 +30,12 @@ Router.prototype.use = function(router){
 };
 
 Router.prototype.exportClient = function(){
+  global.ICE_ENV = 'client'
   return new clientRouter(this);
 };
 
 Router.prototype.exportServer = function(){
+  global.ICE_ENV = 'server'
   return serverRouter(this);
 }
 

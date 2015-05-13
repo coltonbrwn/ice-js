@@ -15,13 +15,15 @@ describe 'Test Collection class', ->
     child.on 'message', (m) ->
       if m is 'listening' then done()
 
-  after (done) ->
-    child.kill();
-    done();
-
   before ->
+    global.ICE_ENV = 'test'
     collection = new artistsCollection
     assert !sd.bsdata?
+
+  after (done) ->
+    global.ICE_ENV = 'test'
+    child.kill();
+    done();
       
   it 'should have all ice base methods', ->
     methods = ['populate', 'authorize', 'getHash', '_fill', '_initialFetch']
