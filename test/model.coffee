@@ -7,23 +7,14 @@ Backbone = require('backbone')
 
 describe 'Test Model class', ->
   model = null
-  child = null
-
-  before (done) ->
-    child = spawn 'node', ['test/app'], {stdio: ['ipc']}
-    child.stderr.pipe(process.stderr)
-    child.on 'message', (m) ->
-      if m is 'listening' then done()
 
   before ->
     global.ICE_ENV = 'test'
     model = new artistModel
       name: 'Flying Lotus'
 
-  after (done) ->
+  after ->
     global.ICE_ENV = undefined
-    child.kill();
-    done();
 
   it 'should have all ice base methods', ->
     methods = ['populate', 'authorize', 'getHash', '_fill', '_initialFetch']

@@ -4,43 +4,18 @@ fs = require('fs')
 mockClient = require './helpers/mockClient'
 
 describe 'Test Client', ->
-  bundle = null
-  firstChunk = null
+  client = null
 
-  before 'Make browserify bundle', (done) ->
-    @timeout 5000
-    router = require './app/routers/testCases.js'
-    builder = Ice.build router
-    builder.once 'data', (chunk) -> firstChunk = chunk
-    dest = fs.createWriteStream "#{__dirname}/app/bundle.js"
-    dest.on 'finish', done
-    builder.pipe dest
-
-  after 'Remove bundle', (done) ->
-    fs.unlink('./test/app/bundle.js', done)
-
-  it 'Bundle should exist', ->
+  before 'Load bundle into mock client', ->
     bundle = fs.readFileSync "#{__dirname}/app/bundle.js"
-
-  it 'Alternate build syntax produces the same bundle', (done) ->
-    @timeout 5000
-    builder = Ice.build
-      routerPath: __dirname+'/app/routers/testCases.js'
-    .once 'data', (chunk) -> 
-      assert.equal(chunk.toString(), firstChunk.toString())
-      done();
-      builder.end()
-    .on 'error', (e) -> done e
+    client = new mockClient
+      disablePageFetch: true
+      bundle: bundle
+      basePath: 'http://localhost:3000'
+      # consoleObj: console
 
   describe 'Test routes', ->
     client = null
-
-    before ->
-      client = new mockClient
-        disablePageFetch: true
-        bundle: bundle
-        basePath: 'http://localhost:3000'
-        # consoleObj: console
 
     describe 'basic routing', ->
       it '/', (done) ->

@@ -22,9 +22,20 @@ Router.prototype.path = function(path, handler){
   });
 };
 
-Router.prototype.use = function(router){
+Router.prototype.use = function(mountPoint, router){
+  if (typeof router === 'undefined' && typeof mountPoint === 'object'){
+    router = mountPoint;
+    mountPoint = '/';
+  }
   if (router instanceof Router){
+    if (mountPoint !== '/' ) {
+      router.entries.forEach(function(entry){
+        entry.path = mountPoint + entry.path
+      });
+    }
     util.arrayMerge(this.entries, router.entries);
+  }else{
+    throw new Error('attempted to attach non Ice Router instance');
   }
   return this
 };

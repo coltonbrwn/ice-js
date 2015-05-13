@@ -1,22 +1,8 @@
 mockClient = require('./helpers/mockClient')
 assert = require('assert')
-spawn = require('child_process').spawn
 http = require('http')
 
 describe 'Test Server', ->
-  child = null
-
-
-  before (done) ->
-    child = spawn 'node', ['test/app'], {stdio: ['ipc']}
-    child.stderr.pipe(process.stderr)
-    child.on 'message', (m) ->
-      if m is 'listening' then done()
-
-  after (done) ->
-    child.kill();
-    done();
-
 
   describe 'Test Routes', ->
     client = null
