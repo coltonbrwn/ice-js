@@ -3,7 +3,7 @@ assert = require('assert')
 spawn = require('child_process').spawn
 http = require('http')
 
-describe 'Test Server', ->
+describe.only 'Test Server', ->
   child = null
 
   # Spawn an instance of the test server at port 3000,
@@ -41,9 +41,18 @@ describe 'Test Server', ->
         client.assertRender '/aux2', 'aux2-ok', done
 
 
-      it 'data api is up', (done) ->
-        http.get 'http://localhost:3000/data/artists', (res) ->
-          done assert.equal(res.statusCode, 200)
+      describe 'data api is up', ->
+        it '/data/artists', (done) ->
+          http.get 'http://localhost:3000/data/artists', (res) ->
+            done assert.equal(res.statusCode, 200)
+
+        it '/data/artists/:id', (done) ->
+          http.get 'http://localhost:3000/data/artists/bonobo', (res) ->
+            done assert.equal(res.statusCode, 200)
+
+        it '/data/artists/foobar fails', (done) ->
+          http.get 'http://localhost:3000/data/artists/foobar', (res) ->
+            done assert.equal(res.statusCode, 404)
 
 
     describe 'parameterized routes', ->

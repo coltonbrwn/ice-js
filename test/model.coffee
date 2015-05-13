@@ -5,7 +5,7 @@ sd = require('sharify').data
 assertExtends = require('./helpers/assertExtends')
 Backbone = require('backbone')
 
-describe.only 'Test Model class', ->
+describe 'Test Model class', ->
   model = null
   child = null
 

@@ -3,11 +3,11 @@ var express = require('express'),
 
 var app = module.exports = express();
 
-app.get('/data/artists', function(req, res){
+app.get('/artists', function(req, res){
   res.json(artistData.topartists.artist)
 });
 
-app.get('/data/artists/:id', function(req, res){
+app.get('/artists/:id', function(req, res){
 
   artistData.topartists.artist.forEach(function(artist){
     artistID = artist.name.replace(/\s+/g, '').toLowerCase()
@@ -16,6 +16,6 @@ app.get('/data/artists/:id', function(req, res){
     }
   });
 
-  if (!res.headersSent) res.statusCode(404).end();
+  if (!res.headersSent) res.status(404).end();
 
 });
