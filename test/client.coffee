@@ -37,7 +37,7 @@ describe 'Test Client', ->
 
     before ->
       client = new mockClient
-        jsEnabled: true
+        disablePageFetch: true
         bundle: bundle
         basePath: 'http://localhost:3000'
         # consoleObj: console

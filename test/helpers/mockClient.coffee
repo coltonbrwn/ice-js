@@ -4,23 +4,24 @@ dummyPage = '<div id="app">test</div>'
 
 # Wraps JSDOM for easy testing with Ice-js.
 # opts:
-#   (bool)    jsEnabled  - turn on/off javascript
+#   (bool)    disableJavascript  - turn on/off javascript
+#   (bool)    disablePageFetch   - turn on/off http page request
 #   (string)  bundle     - application bundle to be executed
-#   (string)  base Path  - for routing
+#   (string)  basePath  - for routing
 #   (object)  consoleObj - recieves the window's console.log messages 
 # 
 
 module.exports = class MockClient
   constructor: (opts) ->
-    @jsEnabled = if opts.jsEnabled then 'script' else false
-    @html      = if @jsEnabled then dummyPage else undefined
-    @bundle    = opts.bundle   or ''
-    @basePath  = opts.basePath or ''
-    @console   = opts.consoleObj or false
+    @jsEnabled = if opts.disableJavascript then false else 'script'
+    @html      = if opts.disablePageFetch then dummyPage else undefined
+    @bundle    =    opts.bundle   or ''
+    @basePath  =    opts.basePath or ''
+    @console   =    opts.consoleObj or false
     return
 
   visit: (url, cb) ->
-    if url[0] isnt '/' then url = "#/{url}"
+    if url[0] isnt '/' then url = "/#{url}"
     document = jsdom.env
       html: @html
       url: @basePath + url

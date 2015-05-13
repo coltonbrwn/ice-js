@@ -6,17 +6,13 @@ http = require('http')
 describe 'Test Server', ->
   child = null
 
-  # Spawn an instance of the test server at port 3000,
-  # listening for special message to confirm success
-  # 
+
   before (done) ->
     child = spawn 'node', ['test/app'], {stdio: ['ipc']}
     child.stderr.pipe(process.stderr)
     child.on 'message', (m) ->
       if m is 'listening' then done()
 
-  # Kill the server instance when we're done
-  # 
   after (done) ->
     child.kill();
     done();
@@ -27,7 +23,7 @@ describe 'Test Server', ->
 
     before ->
       client = new mockClient
-        jsEnabled: false
+        disableJavascript: true
         basePath: 'http://localhost:3000'
    
     describe 'basic routing', ->
