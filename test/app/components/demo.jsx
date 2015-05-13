@@ -1,4 +1,5 @@
-var React = require('react');
+var React = require('react'),
+    Artist = require('./Artist.jsx');
 
 var Demo = React.createClass({
 
@@ -7,8 +8,13 @@ var Demo = React.createClass({
   },
 
   render: function() {
+
+    var artists = this.props.collection.map(function(model, i){
+      return <Artist model={model} key={i} />
+    });
+
     return (
-      <div>hello</div>
+      <div>{artists}</div>
     );
   }
 
