@@ -18,12 +18,16 @@ module.exports = _.extend(Backbone.history, {
     var queryString = this.parseUrl().query;
     var query = querystring.parse(queryString);
 
-    return _.any(this.handlers, function(handler) {
+    var routeDidMatch = _.any(this.handlers, function(handler) {
       if (handler.route.test(fragment)) {
         handler.callback(fragment, query);
         return true;
       }
     });
+
+    if(!routeDidMatch && window.onPageDone) window.onPageDone()
+
+    return routeDidMatch;
   },
 
   route: function(route, callback) {

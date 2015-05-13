@@ -16,6 +16,8 @@ Page.prototype.render = function(Component, initialProps){
   }else if(typeof Component === 'string'){
     document.getElementById('app').innerHTML = Component;
   }
+
+  if(window.onPageDone) window.onPageDone()
 };
 
 

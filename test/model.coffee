@@ -22,7 +22,6 @@ describe 'Test Model class', ->
   before ->
     model = new artistModel
       name: 'Flying Lotus'
-    assert !sd.bsdata?
 
   it 'should have all ice base methods', ->
     methods = ['populate', 'authorize', 'getHash', '_fill', '_initialFetch']

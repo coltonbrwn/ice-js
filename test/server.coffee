@@ -3,7 +3,7 @@ assert = require('assert')
 spawn = require('child_process').spawn
 http = require('http')
 
-describe.only 'Test Server', ->
+describe 'Test Server', ->
   child = null
 
   # Spawn an instance of the test server at port 3000,
@@ -41,19 +41,29 @@ describe.only 'Test Server', ->
         client.assertRender '/aux2', 'aux2-ok', done
 
 
-      describe 'data api is up', ->
-        it '/data/artists', (done) ->
-          http.get 'http://localhost:3000/data/artists', (res) ->
-            done assert.equal(res.statusCode, 200)
+    describe 'data api', ->
+      it '/data/artists', (done) ->
+        http.get 'http://localhost:3000/data/artists', (res) ->
+          done assert.equal(res.statusCode, 200)
 
-        it '/data/artists/:id', (done) ->
-          http.get 'http://localhost:3000/data/artists/bonobo', (res) ->
-            done assert.equal(res.statusCode, 200)
+      it '/data/artists/:id', (done) ->
+        http.get 'http://localhost:3000/data/artists/bonobo', (res) ->
+          done assert.equal(res.statusCode, 200)
 
-        it '/data/artists/foobar fails', (done) ->
-          http.get 'http://localhost:3000/data/artists/foobar', (res) ->
-            done assert.equal(res.statusCode, 404)
+      it '/data/artists/foobar fails', (done) ->
+        http.get 'http://localhost:3000/data/artists/foobar', (res) ->
+          done assert.equal(res.statusCode, 404)
 
+    describe 'react component rendering', ->
+      it 'synchronous react rendering', (done) ->
+        client.visit '/react-sync', (err, window) ->
+          app = window.document.getElementById('demo-inner');
+          done assert.equal app.innerHTML, 'Hello this is a demo!'
+
+      it 'asynchronous react rendering', (done) ->
+        client.visit '/react-async', (err, window) ->
+          app = window.document.getElementById('demo-inner');
+          done assert.equal app.innerHTML, 'Hello this is a demo!'
 
     describe 'parameterized routes', ->
       it '/concat/hello/world', (done) ->

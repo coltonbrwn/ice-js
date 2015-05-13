@@ -31,9 +31,16 @@ module.exports = class MockClient
       created: (error, window) =>
         if @console
           jsdom.getVirtualConsole(window).sendTo(@console);
+
+        if @jsEnabled
+          window.onPageDone = ->
+            if !window.__done
+              cb(error, window)
+              window.__done = true
+              
       done: (errors, window) ->
-        err = processJsdomErrors errors
-        setTimeout (-> cb(err, window)), 500
+        if (err = processJsdomErrors errors) or !window.onPageDone
+          cb(err, window)
 
   assertRender: (url, expected, done) ->
     @visit url, (err, window) ->
@@ -51,4 +58,3 @@ processJsdomErrors = (errors) ->
     if err.data?.error?
       err = err.data.error
   new Error err
-
