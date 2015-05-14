@@ -16,10 +16,11 @@ var serverRouter = module.exports = function(iceRouter){
 
     var path = entry.path;
     var handlerFn  = entry.handler;
+    var header = entry.header;
 
     router.get(path, (function(handler){
       return function(req, res, next){
-        var page = new ServerPage(req, res);
+        var page = new ServerPage(req, res, header);
         handler.call(this.router, page);
       };
     })(handlerFn));

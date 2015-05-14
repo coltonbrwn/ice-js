@@ -1,12 +1,11 @@
 var React = require('react'),
-    Index = require('../../components/htmlBoilerplate.jsx'),
     Error = require('../../components/error.jsx');
 
 var Page = module.exports = function(params, query){
-
   this.params = params || {};
   this.query = query || {};
-  this._metadata = this._req = this._res = {}
+  this._req = this._res = {};
+  this.header = undefined;
 };
 
 Page.prototype.render = function(Component, initialProps){
@@ -24,11 +23,6 @@ Page.prototype.render = function(Component, initialProps){
 Page.prototype.authorizeModel = function(model){
   // no auth needed on client, handled by cookies
   return model;
-};
-
-Page.prototype.meta = function(){
-  // no page meta manipulation on client
-  return this;
 };
 
 Page.prototype.error = function(status){

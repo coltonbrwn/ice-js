@@ -3,6 +3,7 @@ assert = require('assert')
 Backbone = require('backbone')
 express = require('express')
 assertExtends = require('./helpers/assertExtends');
+Ice = require '../ice.js'
 
 describe 'Test Router class', ->
   router = null
@@ -25,5 +26,3 @@ describe 'Test Router class', ->
     serverRouter = router.exportServer()
     expressRouter = new express.Router()
     assertExtends(serverRouter, expressRouter)
-
-

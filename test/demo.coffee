@@ -26,3 +26,8 @@ describe 'Test the demo application', ->
     data = window.__sharifyData.bsdata[bsdataKey]
     artistModel = data[4]
     assert.equal artistModel.name, 'Caribou'
+
+  it 'dynamic header should be there', ->
+    head = window.document.getElementsByTagName('head')[0]
+    assert.equal head.innerHTML, '<meta name="title" content="Flying Lotus">'
+  

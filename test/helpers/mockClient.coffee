@@ -30,6 +30,7 @@ module.exports = class MockClient
         FetchExternalResources: [@jsEnabled],
         ProcessExternalResources: [@jsEnabled]
       created: (error, window) =>
+        if error then return cb(error, null)
         if @console
           jsdom.getVirtualConsole(window).sendTo(@console);
 

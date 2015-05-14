@@ -1,14 +1,15 @@
 var React = require('react'),
     Index = require('../../components/htmlBoilerplate.jsx'),
     Error = require('../../components/error.jsx'),
+    DefaultHead = require('../../components/htmlHeader.jsx'),
     util  = require('../../lib/util.js');
 
-var Page = module.exports = function(_req, _res){
+var Page = module.exports = function(_req, _res, header){
   this._req = _req;
   this._res = _res;
   this.params = _req.params || {};
   this.query = _req.query || {};
-  this._metadata = [];
+  this.header = header || undefined;
 };
 
 Page.prototype.render = function(Component, initialProps){
@@ -21,11 +22,15 @@ Page.prototype.render = function(Component, initialProps){
     var contentString = Component;
   }
 
+  var headerContent = this.header
+      ? this.header.render(initialProps)
+      : '';
+
   var html = React.renderToStaticMarkup(
     React.createElement(Index, {
       sd: sd,
       content: contentString,
-      metadata: this._metadata
+      header: headerContent
     })
   );
 
@@ -38,11 +43,6 @@ Page.prototype.authorizeModel = function(model){
   return model;
 }
 
-Page.prototype.meta = function(metadata){
-  util.arrayMerge(this._metadata, metadata);
-  return this;
-}
-
 Page.prototype.error = function(status){
   status = (typeof status === 'number') ? status : 500;
   var sd = require('sharify').data;
@@ -52,8 +52,7 @@ Page.prototype.error = function(status){
   var html = React.renderToStaticMarkup(
     React.createElement(Index, {
       sd: sd,
-      content: contentString,
-      metadata: this._metadata
+      content: contentString
     })
   );
   this._res.status(status).send(html)

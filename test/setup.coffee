@@ -4,13 +4,12 @@ spawn = require('child_process').spawn
 
 child = null
 
-
+# do the callback when register is called twice
 Monitor = (cb) ->
   called = 0
   register: -> ->
     called++
     if called == 2 then do cb
-
 
 before 'Make browserify bundle', (done) ->
 
