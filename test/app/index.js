@@ -1,7 +1,7 @@
 var express = require('express'),
     fs = require('fs'),
     tests = require('./routers/testCases.js'),
-    demo = require('./routers/demo.js'),
+    demo = require('./routers/demo.jsx'),
     routers = require('./routers'),
     Ice = require('ice-js'),
     dataAPI = require('./data_api');

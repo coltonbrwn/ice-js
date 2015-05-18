@@ -4,6 +4,8 @@ var Index = React.createClass({
   
   render: function() {
 
+    console.log(this.props.header);
+
     return(
       <html lang="en">
         <head>

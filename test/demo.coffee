@@ -28,6 +28,6 @@ describe 'Test the demo application', ->
     assert.equal artistModel.name, 'Caribou'
 
   it 'dynamic header should be there', ->
-    head = window.document.getElementsByTagName('head')[0]
-    assert.equal head.innerHTML, '<meta name="title" content="Flying Lotus">'
+    title = window.document.title
+    assert.equal title, 'Flying Lotus'
   
