@@ -20,15 +20,14 @@ Ice is not to be used as a data source, it has no methods for database access, s
 ###A quick Hello World
 ```javascript
 var Ice = require('ice-js'),
-    router = new Ice.Router;
+    express = require('express'),
+    router = new Ice.Router,
+    app = express();
     
 router.path('/', function(page){
   page.render('Hello World!');
 });
 
-var express = require('express'),
-    app = express();
-    
 app.get('ice-assets/bundle.js', function(req, res){
   Ice.build(router).pipe(res);
 };
@@ -37,3 +36,5 @@ app.use(router.make());
 
 app.listen(3000);
 ```
+
+#More docs coming ASAP
