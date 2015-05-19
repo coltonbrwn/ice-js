@@ -1,8 +1,8 @@
-var IceRouter = require('ice-js').Router,
+var Ice = require('ice-js'),
     Test = require('../components/Test.jsx'),
     artistsCollection = require('../artistsCollection.js');
 
-var Router = module.exports = new IceRouter;
+var Router = module.exports = new Ice.Router;
 
 Router.path('/', function(page){
   page.render('home');

@@ -1,21 +1,21 @@
 var express = require('express'),
     fs = require('fs'),
-    tests = require('./routers/testCases.js'),
-    demo = require('./routers/demo.jsx'),
-    routers = require('./routers'),
-    Ice = require('ice-js'),
-    dataAPI = require('./data_api');
+    routers = require('./routers/index.js'),
+    Ice = require('ice-js');
 
 var app = express();
 
 app.get('/ice-assets/bundle.js', function(req, res){
-  fs.createReadStream(__dirname+'/bundle.js')
-    .on('error', function(){
-      return Ice.build(tests)
-    }).pipe(res);
+  if(fs.existsSync(__dirname+'/bundle.js')){
+    fs.createReadStream(__dirname+'/bundle.js')
+      .pipe(res);
+  }else{
+    Ice.build(routers)
+      .pipe(res);
+  }
 });
 
-app.use('/data', dataAPI);
+app.use('/data', require('./data_api'));
 app.use(routers.exportServer());
 
 app.listen(3000, function(){

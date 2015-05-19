@@ -20,7 +20,6 @@ module.exports = {
       render: function(props){
         var i=0;
         return definition(props).map(function(prop){
-          console.log(prop);
           return prop;
         });
       }

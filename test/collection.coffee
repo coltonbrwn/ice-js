@@ -17,7 +17,7 @@ describe 'Test Collection class', ->
     global.ICE_ENV = 'test'
       
   it 'should have all ice base methods', ->
-    methods = ['populate', 'authorize', 'getHash', '_fill', '_initialFetch']
+    methods = ['populate', 'request', 'getHash', '_fill', '_initialFetch']
     methods.forEach (method) ->
       assert.equal typeof collection[method], 'function',
         "method '#{method}' was not found"

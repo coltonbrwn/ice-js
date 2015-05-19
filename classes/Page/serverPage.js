@@ -2,7 +2,9 @@ var React = require('react'),
     Index = require('../../components/htmlBoilerplate.jsx'),
     Error = require('../../components/error.jsx'),
     DefaultHead = require('../../components/htmlHeader.jsx'),
-    util  = require('../../lib/util.js');
+    util  = require('../../lib/util.js'),
+    cookie = require('express/node_modules/cookie');
+
 
 var Page = module.exports = function(_req, _res, header){
   this._req = _req;
@@ -38,10 +40,15 @@ Page.prototype.render = function(Component, initialProps){
 };
 
 
-Page.prototype.authorizeModel = function(model){
-  model.authCookie = this._req.cookies['connect.sid'];
-  return model;
-}
+Page.prototype.getCookies = function(options){
+  options = options || {};
+  var str = this._req.headers.cookie || '';
+  return options.parse ? cookie.parse(str) : str;
+};
+
+Page.prototype.setCookie = function(name, value, options){
+  return this._res.cookie.apply(null, arguments);
+};
 
 Page.prototype.error = function(status){
   status = (typeof status === 'number') ? status : 500;

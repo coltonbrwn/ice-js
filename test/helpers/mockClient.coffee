@@ -1,8 +1,9 @@
 jsdom = require 'jsdom'
 assert = require 'assert'
 dummyPage = '<div id="app">test</div>'
+_ = require('backbone/node_modules/underscore')
 
-# Wraps JSDOM for easy testing with Ice-js.
+# Wraps jsdom for easy testing with Ice-js.
 # opts:
 #   (bool)    disableJavascript  - turn on/off javascript
 #   (bool)    disablePageFetch   - turn on/off http page request
@@ -18,11 +19,19 @@ module.exports = class MockClient
     @bundle    =    opts.bundle   or ''
     @basePath  =    opts.basePath or ''
     @console   =    opts.consoleObj or false
+    @config    =    opts.config or {}
     return
 
-  visit: (url, cb) ->
+  visit: (url, config, cb) ->
+
+    if typeof cb is 'function'
+      config = config || @config
+    else if typeof cb is 'undefined'
+      cb = config
+      config = @config
+
     if url[0] isnt '/' then url = "/#{url}"
-    document = jsdom.env
+    document = jsdom.env _.extend config,
       html: @html
       url: @basePath + url
       src: [@bundle]
@@ -45,6 +54,7 @@ module.exports = class MockClient
           cb(err, window)
 
   assertRender: (url, expected, done) ->
+    if !done? then throw new Error 'please supply a callback'
     @visit url, (err, window) ->
       if err then throw err
       app = window.document.getElementById 'app'

@@ -1,5 +1,6 @@
 var React = require('react'),
-    Error = require('../../components/error.jsx');
+    Error = require('../../components/error.jsx'),
+    cookie = require('express/node_modules/cookie');
 
 var Page = module.exports = function(params, query){
   this.params = params || {};
@@ -20,9 +21,15 @@ Page.prototype.render = function(Component, initialProps){
 };
 
 
-Page.prototype.authorizeModel = function(model){
-  // no auth needed on client, handled by cookies
-  return model;
+Page.prototype.getCookies = function(options){
+  options = options || {};
+  var str = document.cookie || '';
+  return options.parse ? cookie.parse(str) : str;
+};
+
+Page.prototype.setCookie = function(name, value, options){
+  var cookieString = cookie.serialize.apply(null, arguments);
+  return document.cookie = cookieString;
 };
 
 Page.prototype.error = function(status){

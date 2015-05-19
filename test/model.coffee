@@ -17,7 +17,7 @@ describe 'Test Model class', ->
     global.ICE_ENV = undefined
 
   it 'should have all ice base methods', ->
-    methods = ['populate', 'authorize', 'getHash', '_fill', '_initialFetch']
+    methods = ['populate', 'request', 'getHash', '_fill', '_initialFetch']
     methods.forEach (method) ->
       assert.equal typeof model[method], 'function',
         "method '#{method}' was not found"

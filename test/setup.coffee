@@ -26,6 +26,7 @@ before 'Make browserify bundle', (done) ->
   console.log 'Starting Test Server...\n'
   child = spawn 'node', ['test/app'], {stdio: ['ipc']}
   child.stderr.pipe(process.stderr)
+  child.stdout.pipe(process.stdout)
   child.on 'message', (m) ->
     if m is 'listening' then do monitor.register()
 

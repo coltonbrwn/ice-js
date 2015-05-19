@@ -1,6 +1,5 @@
 require('node-jsx').install({extension: '.jsx'});
 
-
 var express = require('express'),
     router = require('../test/app/routers/demo.jsx'),
     Ice = require('../ice.js'),
@@ -14,7 +13,7 @@ var builder = Ice.build(router)
 app.use('/ice-assets', express.static(__dirname));
 app.use('/data', require('../test/app/data_api'));
 
-app.use(router.exportServer());
+app.use(router.make());
 
 builder.on('finish', function(){
   app.listen(3000, function(){
