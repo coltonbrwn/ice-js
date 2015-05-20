@@ -1,5 +1,4 @@
 var React = require('react'),
-    Error = require('../../components/error.jsx'),
     cookie = require('express/node_modules/cookie');
 
 var Page = module.exports = function(params, query){
@@ -31,11 +30,6 @@ Page.prototype.getCookies = function(options){
 Page.prototype.setCookie = function(name, value, options){
   var cookieString = cookie.serialize.apply(null, arguments);
   return document.cookie = cookieString;
-};
-
-Page.prototype.error = function(status){
-  React.render(React.createElement(Error, {errorCode:status}),
-    document.getElementById('app'));
 };
 
 Page.prototype.visit = function(urlFragment){

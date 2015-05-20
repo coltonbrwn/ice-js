@@ -1,7 +1,5 @@
 var React = require('react'),
     Index = require('../../components/htmlBoilerplate.jsx'),
-    Error = require('../../components/error.jsx'),
-    DefaultHead = require('../../components/htmlHeader.jsx'),
     util  = require('../../lib/util.js'),
     cookie = require('express/node_modules/cookie');
 
@@ -47,21 +45,6 @@ Page.prototype.getCookies = function(options){
 Page.prototype.setCookie = function(name, value, options){
   return this._res.cookie.apply(null, arguments);
 };
-
-Page.prototype.error = function(status){
-  status = (typeof status === 'number') ? status : 500;
-  var sd = require('sharify').data;
-  sd.bsdata = {};
-  var element = React.createElement(Error, {errorCode:status});
-  var contentString = React.renderToString(element);
-  var html = React.renderToStaticMarkup(
-    React.createElement(Index, {
-      sd: sd,
-      content: contentString
-    })
-  );
-  this._res.status(status).send(html)
-}
 
 Page.prototype.visit = function(urlFragment){
   this._res.redirect(urlFragment); 
