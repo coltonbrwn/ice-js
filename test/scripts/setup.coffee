@@ -1,6 +1,6 @@
-Ice = require('./app/node_modules/ice-js')
-fs = require 'fs'
+fs    = require 'fs'
 spawn = require('child_process').spawn
+Ice   = require '../app/node_modules/ice-js'
 
 child = null
 
@@ -17,10 +17,11 @@ before 'Make browserify bundle', (done) ->
 
   console.log 'Building Application Bundle...\n'
   @timeout 5000
-  router = require './app/routers'
+  router = require '../app/routers'
   builder = Ice.build router
   builder.on 'error', (e) -> done(e)
-  dest = fs.createWriteStream "#{__dirname}/app/bundle.js"
+  
+  dest = fs.createWriteStream "#{__dirname}/../app/bundle.js"
   dest.on 'finish', monitor.register()
   dest.on 'error', (e) -> done(e)
   builder.pipe dest
@@ -33,7 +34,7 @@ before 'Make browserify bundle', (done) ->
     if m is 'listening' then do monitor.register()
 
 after 'Remove bundle', (done) ->
-  fs.unlink("#{__dirname}/app/bundle.js", done)
+  fs.unlink("#{__dirname}/../app/bundle.js", done)
 
 after 'Kill the test server', (done) ->
   child.kill();

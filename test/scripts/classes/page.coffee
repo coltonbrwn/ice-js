@@ -1,6 +1,6 @@
-serverPage = require('../classes/Page/serverPage.js')
-clientPage = require('../classes/Page/clientPage.js')
-assertExtends = require('./helpers/assertExtends')
+serverPage    = require '../../../classes/Page/serverPage.js'
+clientPage    = require '../../../classes/Page/clientPage.js'
+assertExtends = require '../../helpers/assertExtends'
 
 describe 'Test Page class', ->
 

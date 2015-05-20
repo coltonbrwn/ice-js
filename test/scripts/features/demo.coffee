@@ -1,5 +1,5 @@
 assert = require 'assert'
-mockClient = require('./helpers/mockClient')
+mockClient = require '../../helpers/mockClient'
 
 describe 'Test the demo application', ->
   window = null

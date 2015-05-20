@@ -1,15 +1,15 @@
-Router = require('../ice.js').Router
-assert = require('assert')
-Backbone = require('backbone')
-express = require('express')
-assertExtends = require('./helpers/assertExtends');
-Ice = require '../ice.js'
+assert        = require 'assert'
+Backbone      = require 'backbone'
+express       = require 'express'
+assertExtends = require '../../helpers/assertExtends'
+Ice           = require '../../../ice.js'
+
 
 describe 'Test Router class', ->
   router = null
 
   before ->
-    router = new Router()
+    router = new Ice.Router()
 
   it 'should have all ice router methods', ->  
     methods = ['path', 'use', 'exportClient', 'exportServer', 'getLocation']

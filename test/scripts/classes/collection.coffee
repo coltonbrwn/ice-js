@@ -1,9 +1,9 @@
-artistsCollection = require('./app/artistsCollection.js')
-assert = require('assert')
-spawn = require('child_process').spawn
-sd = require('sharify').data
-assertExtends = require('./helpers/assertExtends')
-Backbone = require('backbone')
+assert            = require 'assert'
+spawn             = require('child_process').spawn
+sd                = require('sharify').data
+Backbone          = require 'backbone'
+assertExtends     = require '../../helpers/assertExtends'
+artistsCollection = require '../../app/artistsCollection.js'
 
 describe 'Test Collection class', ->
   collection = null

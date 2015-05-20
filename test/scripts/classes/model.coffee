@@ -1,9 +1,10 @@
-artistModel = require('./app/artistModel.js')
-assert = require('assert')
-spawn = require('child_process').spawn
-sd = require('sharify').data
-assertExtends = require('./helpers/assertExtends')
-Backbone = require('backbone')
+assert        = require 'assert'
+spawn         = require('child_process').spawn
+sd            = require('sharify').data
+Backbone      = require 'backbone'
+assertExtends = require '../../helpers/assertExtends'
+artistModel   = require '../../app/artistModel.js'
+
 
 describe 'Test Model class', ->
   model = null

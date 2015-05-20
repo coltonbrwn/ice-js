@@ -1,7 +1,7 @@
-mockClient = require './helpers/mockClient'
-artistModel = require './app/artistModel.js'
-fs = require 'fs'
-assert = require 'assert'
+fs          = require 'fs'
+assert      = require 'assert'
+mockClient  = require '../../helpers/mockClient'
+artistModel = require '../../app/artistModel.js'
 
 describe 'Cookies should work', ->
   client = null

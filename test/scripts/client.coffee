@@ -1,17 +1,22 @@
-mockClient = require('./helpers/mockClient')
-assert = require('assert')
-http = require('http')
+assert     = require 'assert'
+fs         = require 'fs'
+mockClient = require '../helpers/mockClient'
+Ice        = require '../app/node_modules/ice-js'
 
-describe 'Test Server', ->
+describe 'Test Client', ->
+  client = null
 
-  describe 'Test Routes', ->
+  before 'Load bundle into mock client', ->
+    bundle = fs.readFileSync "#{__dirname}/../app/bundle.js"
+    client = new mockClient
+      disablePageFetch: true
+      bundle: bundle
+      basePath: 'http://localhost:3000'
+      # consoleObj: console
+
+  describe 'Test routes', ->
     client = null
 
-    before ->
-      client = new mockClient
-        disableJavascript: true
-        basePath: 'http://localhost:3000'
-   
     describe 'basic routing', ->
       it '/', (done) ->
         client.assertRender '/', 'home', done
@@ -23,43 +28,19 @@ describe 'Test Server', ->
         client.assertRender '/aux2', 'aux2-ok', done
 
 
-    describe 'data api', ->
-      it '/data/artists', (done) ->
-        http.get 'http://localhost:3000/data/artists', (res) ->
-          done assert.equal(res.statusCode, 200)
-
-      it '/data/artists/:id', (done) ->
-        http.get 'http://localhost:3000/data/artists/bonobo', (res) ->
-          done assert.equal(res.statusCode, 200)
-
-      it '/data/artists/foobar fails', (done) ->
-        http.get 'http://localhost:3000/data/artists/foobar', (res) ->
-          done assert.equal(res.statusCode, 404)
-
-    describe 'react component rendering', ->
-      it 'synchronous react rendering', (done) ->
-        client.visit '/react-sync', (err, window) ->
-          app = window.document.getElementById('test-inner');
-          done assert.equal app.innerHTML, 'This is a react component!'
-
-      it 'asynchronous react rendering', (done) ->
-        client.visit '/react-async', (err, window) ->
-          app = window.document.getElementById('test-inner');
-          done assert.equal app.innerHTML, 'This is a react component!'
-
     describe 'parameterized routes', ->
       it '/concat/hello/world', (done) ->
         client.assertRender '/concat/hello/world', 'helloworld', done
-
+        
       it '/concat/123/456', (done) ->
         client.assertRender '/concat/123/456', '123456', done
-
+        
       it '/concat2/see/spot/run', (done) ->
         client.assertRender '/concat2/see/spot/run', 'seerun', done
-
+        
       it '/concat2/hi/friend', (done) ->
         client.assertRender '/concat2/hi/friend', 'hifriend', done
-
+        
 
     describe 'glob routes', ->
       it '/abcd', (done) ->
@@ -68,8 +49,8 @@ describe 'Test Server', ->
       it '/abRANDOM1234cd', (done) ->
         client.assertRender '/abRANDOM1234cd', 'ok', done
 
-      # it '/abcdx', (done) ->
-      #   client.assertRender '/abcdx', 'test', done
+      it '/abcdx', (done) ->
+        client.assertRender '/abcdx', 'test', done
 
 
     describe 'regex routes', ->
@@ -79,9 +60,8 @@ describe 'Test Server', ->
       it '/zyxfly', (done) ->
         client.assertRender '/zyxfly', 'ok', done
 
-      # it '/superflyflyz', (done) ->
-      #   client.assertRender '/superflyflyz', 'test', done
-
+      it '/superflyflyz', (done) ->
+        client.assertRender '/superflyflyz', 'test', done
 
     describe 'query parameters', ->
       it '/query?firstname=robert&lastname=paulson', (done) ->
@@ -91,4 +71,5 @@ describe 'Test Server', ->
       it '/queryMath/?a=1&b=3&c=3&d=7', (done) ->
         client.assertRender '/queryMath/?a=1&b=3&c=3&d=7'
           , '1337', done
+
 
