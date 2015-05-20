@@ -1,6 +1,6 @@
 {
   "name": "ice-js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "An tool for easily building isomorphic javascript applications on top of Backbone and React",
   "main": "ice.js",
   "scripts": {

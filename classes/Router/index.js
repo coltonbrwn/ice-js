@@ -57,7 +57,6 @@ Router.prototype.exportClient = function(){
   return new clientRouter(this);
 };
 
-Router.prototype.make = 
 Router.prototype.exportServer = function(){
   global.ICE_ENV = 'server'
   return serverRouter(this);

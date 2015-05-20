@@ -1,4 +1,4 @@
-#Ice.js         [![Build Status](https://travis-ci.org/coltonTB/graffiti.svg)](https://travis-ci.org/coltonTB/graffiti)
+#Ice.js         [![Build Status](https://travis-ci.org/coltonTB/ice-js.svg?branch=master)](https://travis-ci.org/coltonTB/ice-js)
 
 ####What it is
 Ice is a small group of tools for making isomorphic MVC applications easy to build in javascript. It runs server-side on top of Express, and supports React for UI rendering. It allows you to write DRY, modular code using familiar APIs that run anywhere.
@@ -17,13 +17,13 @@ router.path('/', function(page){
   page.render('Hello World!');
 });
 ```
-To run this on the server, call the router's `make` function and mount it onto an express app with `use`:
+To run this on the server, call the router's `exportServer` function and mount it onto an express app with `use`:
 ```javascript
 //index.js
 var app = require('express')(),
     router = require('./router.js');
     
-app.use(router.make());
+app.use(router.exportServer());
 app.listen(3000);
 ```
 To run on the client, you'll need to serve a bundled version of the router at `/ice-assets/bundle.js`, which Ice will automatically fetch and instantiate on pageload. Pass the router instance to `Ice.build`, and you'll get back the bundle file in the form of a [readable stream](https://nodejs.org/api/stream.html#stream_class_stream_readable) that you can write to disk then serve statically:
@@ -70,7 +70,7 @@ module.exports = router;
 ```javascript
 // index.js
 var router = require('./router2.js');
-app.use(router.make());
+app.use(router.exportServer());
 app.listen(3000);
 // accepts routes /foo/abXcd, /foo/HELLO, /lower/HELLO
 ```

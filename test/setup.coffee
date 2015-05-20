@@ -19,8 +19,10 @@ before 'Make browserify bundle', (done) ->
   @timeout 5000
   router = require './app/routers'
   builder = Ice.build router
+  builder.on 'error', (e) -> done(e)
   dest = fs.createWriteStream "#{__dirname}/app/bundle.js"
   dest.on 'finish', monitor.register()
+  dest.on 'error', (e) -> done(e)
   builder.pipe dest
 
   console.log 'Starting Test Server...\n'
