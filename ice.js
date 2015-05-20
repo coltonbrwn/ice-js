@@ -3,13 +3,13 @@ module.exports = {
 
   Router: require('./classes/Router'),
 
-  Model: require('./classes/Model'),
+  Model: require('./classes/model.js'),
 
-  Collection: require('./classes/Collection'),
+  Collection: require('./classes/collection.js'),
 
   Page: require('./classes/Page'),
 
-  History: require('./classes/History'),
+  History: require('./classes/History.js'),
 
   build: require('./lib/build.js'),
 
