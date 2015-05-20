@@ -1,4 +1,4 @@
-#Ice.js
+#Ice.js         [![Build Status](https://travis-ci.org/coltonTB/graffiti.svg)](https://travis-ci.org/coltonTB/graffiti)
 
 ####What it is
 Ice is a small group of tools for making isomorphic MVC applications easy to build in javascript. It runs server-side on top of Express, and supports React for UI rendering. It allows you to write DRY, modular code using familiar APIs that run anywhere.
