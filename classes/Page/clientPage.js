@@ -17,6 +17,7 @@ Page.prototype.render = function(Component, initialProps){
     document.getElementById('app').innerHTML = Component;
   }
 
+  // notifies anyone listening that the page has rendered
   if(window.onPageDone) window.onPageDone()
 };
 
@@ -40,3 +41,7 @@ Page.prototype.error = function(status){
 Page.prototype.visit = function(urlFragment){
   Backbone.history.navigate(urlFragment,{trigger:true});
 }
+
+Page.prototype.setHeader = function(headerFn){
+  return this;
+};

@@ -2,18 +2,26 @@ var Ice = require('ice-js'),
     Demo = require('../components/Demo.jsx'),
     Artists = require('../artistsCollection.js'),
     Artist  = require('../artistModel.js'),
-    React = require('react');
+    el = require('react').createElement;
 
 var Router = module.exports = new Ice.Router;
 
-// Router.setHeader(Ice.createHeader(function(props){
-//   return [
-//     <title>{props.collection.models[0].get('name')}</title>,
-//     <link rel="stylesheet" href="/ice-assets/style.css"/>
-//   ]
-// }));
+// Router.all(function(page){
+
+// );
 
 Router.path('/', function(page){
+
+  page.setHeader(function(props){
+    return [
+      el('title', null, props.collection.models[0].get('name')),
+      el('link', {
+        rel:'stylesheet', 
+        href:'/ice-assets/style.css'
+      })
+    ]
+  });
+
   var artistsCollection = new Artists
   artistsCollection.populate().then(function(){
     page.render(Demo, {

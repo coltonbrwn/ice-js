@@ -1,7 +1,5 @@
-require('node-jsx').install({extension: '.jsx'});
-
 var express = require('express'),
-    router = require('../test/app/routers/demo.jsx'),
+    router = require('../test/app/routers/demo.js'),
     Ice = require('../ice.js'),
     fs = require('fs');
 

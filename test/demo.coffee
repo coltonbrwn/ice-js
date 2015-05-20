@@ -27,7 +27,7 @@ describe 'Test the demo application', ->
     artistModel = data[4]
     assert.equal artistModel.name, 'Caribou'
 
-  it 'dynamic header should be there', ->
+  it 'dynamic header should be Flying Lotus', ->
     title = window.document.title
     assert.equal title, 'Flying Lotus'
   

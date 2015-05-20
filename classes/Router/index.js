@@ -46,20 +46,6 @@ Router.prototype.use = function(mountPoint, router){
   return this
 };
 
-Router.prototype.setHeader = function(HeadComponent){
-  if (typeof HeadComponent !== 'object') {
-    throw new Error('invalid Header component');
-  };
-
-  // update all entries with new header
-  this.headerComponent = HeadComponent;
-  this.entries.forEach(function(entry){
-    entry.header = HeadComponent;
-  });
-
-  return this;
-};
-
 Router.prototype.exportClient = function(){
   global.ICE_ENV = 'client'
   return new clientRouter(this);

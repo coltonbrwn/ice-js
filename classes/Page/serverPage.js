@@ -25,7 +25,7 @@ Page.prototype.render = function(Component, initialProps){
   }
 
   var headerContent = this.header
-      ? this.header.render(initialProps)
+      ? this.header.call(null, initialProps)
       : '';
 
   var html = React.renderToStaticMarkup(
@@ -67,4 +67,12 @@ Page.prototype.error = function(status){
 
 Page.prototype.visit = function(urlFragment){
   this._res.redirect(urlFragment); 
+}
+
+Page.prototype.setHeader = function(headerFn){
+  if (typeof headerFn === 'function') {
+    this.header = headerFn
+  }else{
+    throw new Error('argument must be a function that returns (an array of) React Elements')
+  }
 }

@@ -1,5 +1,5 @@
 var Ice = require('ice-js'),
-    demoRouter = require('./demo.jsx'),
+    demoRouter = require('./demo.js'),
     testRouter = require('./testCases.js');
 
 var Router = module.exports = new Ice.Router();
