@@ -1,4 +1,4 @@
 var baseMethods = require('../lib/baseModel.js'),
-    Backbone = require('Backbone');
+    Backbone = require('backbone');
 
 module.exports = Backbone.Collection.extend(baseMethods);
