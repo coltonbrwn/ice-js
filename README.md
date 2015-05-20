@@ -1,4 +1,6 @@
-#Ice.js         [![Build Status](https://travis-ci.org/coltonTB/ice-js.svg?branch=master)](https://travis-ci.org/coltonTB/ice-js)
+#Ice.js
+[![NPM Version][npm-image]][npm-url]
+[![Build Status][travis-image]][travis-url]
 
 ####What it is
 Ice is a small group of tools for making isomorphic MVC applications easy to build in javascript. It runs server-side on top of Express, and supports React for UI rendering. It allows you to write DRY, modular code using familiar APIs that run anywhere.
@@ -128,3 +130,8 @@ On the server, `populate` makes a call to `http://data-api.com/[id]` by delegati
 
 ##Examples
 coming soon...
+
+[travis-image]: https://travis-ci.org/coltonTB/ice-js.svg?branch=master
+[travis-url]: https://travis-ci.org/coltonTB/ice-js
+[npm-image]: https://img.shields.io/npm/v/ice-js.svg
+[npm-url]: https://npmjs.org/package/ice-js
