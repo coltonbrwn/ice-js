@@ -11,49 +11,70 @@ It relies on the existence of a data source in the form of a REST API.
 It's not for building web applications that don't map HTTP routes to behavior.
 
 ##Using Ice
-First create an instance of `Ice.Router` and define a path:
+Define your application by creating an instance of `Ice.Router` and specifing a path with a handler:
+`//router.js`
 ```javascript
-//router.js
 var Ice = require('ice-js');
 var Router = module.exports = new Ice.Router;
 router.path('/', function(page){
   page.render('Hello World!');
 });
 ```
-To run this router on the server, call its `make` function to return an express router that can be mounted with `use`:
+To run on the server, call the router's `make` function and mount it onto express with `use`:
+`//index.js`
 ```javascript
-//index.js
 var express = require('express'),
     app = express(),
     router = require('./router.js');
 app.use(router.make());
 app.listen(3000);
 ```
-To run it on the client, you'll need to turn the router into a bundled script and run in in a browser context.
-By passsing the router instance to `Ice.build`, you'll get a [Readable Stream](https://nodejs.org/api/stream.html#stream_class_stream_readable) that you can write to disk then serve statically.
-
+To run on the client, you'll need to create a `bundle.js` file.
+Pass the router instance to `Ice.build`, and you'll get a [Readable Stream](https://nodejs.org/api/stream.html#stream_class_stream_readable) that you can write to disk then serve statically.
 ```javascript
-//gulpfile.js
-var gulp = require( 'gulp' ),
-    Ice = require('ice-js'),
-    source = require('vinyl-source-stream'),
-    router = require('./router.js');
+var Ice = require('ice-js'),
+    router = require('./router.js'),
+    fs = require('fs');
     
-gulp.task( 'default', function(){
-  Ice.build(router)
-    .pipe(source('bundle.js'))
-    .pipe(gulp.dest('./build'));
-});
+Ice.build(router)
+  .pipe(fs.createWriteStream(__dirname+'/bundle.js'));
 ```
 ```javascript
 //server.js
 app.use('/ice-assets', express.static('./build'));
 ```
 
-Because Ice.build implements a Readable Stream, you could also serve the bundle on-demand like this:
+For dev environments, you could also compile the bundle on-demand like this:
 ```javascript
 //server.js
 app.get('/ice-assets/bundle.js', function(req, res){
     Ice.build(router).pipe(res);
 });
+```
+
+###The Ice Router Class
+The Ice Router is inspired by express, and is highly composable. You can take advantage of the `use` function to create complex routing schemes that are separated into modules. You can use express-style regexes, globs, and properties to define dynamic routes.
+```javascript
+//router1.js
+var router = exports = new require('ice-js').Router;
+router.path('/ab*cd', function(page){
+  page.render('OK');
+});
+module.exports = router;
+```
+```javascript
+//router2.js
+var router  = new require('ice-js').Router;
+router.path('/tolowercase/:string', function(page){
+  page.render(page.params.string.toLowerCase());
+});
+router.use(require('router1.js'));
+module.exports = router;
+```
+```javascript
+//index.js
+var router = require('router2.js');
+app.use(router.make());
+app.listen(3000);
+// accepts routes /abcd, /abRANDOMcd, /tolowercase/HELLO
 ```
