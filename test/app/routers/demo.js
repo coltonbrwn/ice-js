@@ -6,19 +6,18 @@ var Ice = require('ice-js'),
 
 var Router = module.exports = new Ice.Router;
 
-// Router.all(function(page){
-
-// );
+Router.all(function(page){
+  page.setHeader(function(props){
+    return ['meta', {name:'foobar'}]
+  });
+});
 
 Router.path('/', function(page){
 
   page.setHeader(function(props){
     return [
-      el('title', null, props.collection.models[0].get('name')),
-      el('link', {
-        rel:'stylesheet', 
-        href:'/ice-assets/style.css'
-      })
+      ['title', null, props.collection.models[0].get('name')],
+      ['link', {rel:'stylesheet', href:'/ice-assets/style.css'}]
     ]
   });
 
@@ -32,6 +31,11 @@ Router.path('/', function(page){
 
 
 Router.path('/profile', function(page){
+
+  page.setHeader(function(props){
+    return ['title', null, 'Colton Brown']
+  });
+
   Ice.Model.prototype.request({
     url: 'http://localhost:3000/data/me',
     method: 'GET',

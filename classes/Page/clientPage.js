@@ -6,7 +6,7 @@ var Page = module.exports = function(params, query){
   this.params = params || {};
   this.query = query || {};
   this._req = this._res = {};
-  this.header = undefined;
+  this.headerDefs = [];
 };
 
 Page.prototype.render = function(Component, initialProps){

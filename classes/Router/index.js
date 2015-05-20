@@ -6,7 +6,7 @@ var util = require('../../lib/util.js'),
 module.exports = Router = function(){
   this.entries = [];
   this.location = stack()[1].getFileName();
-  this.headerComponent = null;
+  this.middleware = [];
 };
 
 Router.prototype.path = function(path, handler){
@@ -20,30 +20,36 @@ Router.prototype.path = function(path, handler){
   this.entries.push({
     path: path,
     handler: handler,
-    header: this.headerComponent
   });
 };
 
 Router.prototype.use = function(mountPoint, router){
-  if (typeof router === 'undefined' && typeof mountPoint === 'object'){
-    router = mountPoint;
-    mountPoint = '/';
+  if (typeof router === 'undefined'
+      && typeof mountPoint === 'object'){
+        router = mountPoint;
+        mountPoint = '/';
   }
-  if (!router instanceof Router){
+  if (! router instanceof Router){
     throw new Error('attempted to attach non Ice Router instance');
   }
 
-  // process individual entries of the target router
-  // if a mount point was specified, prepend it to the route path
-  // if the entry does not have a defined header, use this one
+  // Process individual entries of the target router
+  // so that they can be added to this router.
+  // If a mount point was specified, prepend it to the path
   router.entries.forEach(function(entry){
-    if (mountPoint !== '/' ) entry.path = mountPoint + entry.path;
-    if(!entry.header) entry.header = this.headerComponent;
+    if (mountPoint !== '/' ){
+      entry.path = mountPoint + entry.path;
+    }
   });
 
   util.arrayMerge(this.entries, router.entries);
+  util.arrayMerge(this.middleware, router.middleware);
 
   return this
+};
+
+Router.prototype.all = function(handler){
+  this.middleware.push(handler);
 };
 
 Router.prototype.exportClient = function(){

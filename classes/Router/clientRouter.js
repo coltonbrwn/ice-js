@@ -8,7 +8,7 @@ module.exports = Backbone.Router.extend({
   initialize: function(iceRouter){
     this.iceRouter = iceRouter;
     var router = this;
-    iceRouter.entries.forEach(function(entry, i){
+    iceRouter.entries.forEach(function(entry){
       var pathString = entry.path;
       router.route(pathString, entry.handler);
     });
@@ -38,6 +38,10 @@ module.exports = Backbone.Router.extend({
 
   execute: function(callback, params, query) {
     var page = new ClientPage(params, query);
+    // apply these functions to each page
+    this.iceRouter.middleware.forEach(function(fn){
+      fn.call(this.iceRouter, page)
+    });
     if (callback) callback.call(this.iceRouter, page);
   },
 

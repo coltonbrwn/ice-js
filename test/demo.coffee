@@ -30,4 +30,8 @@ describe 'Test the demo application', ->
   it 'dynamic header should be Flying Lotus', ->
     title = window.document.title
     assert.equal title, 'Flying Lotus'
+
+  it 'should have a header set by the Router.all function', ->
+    meta = window.document.getElementsByTagName('meta')[0]
+    assert.equal meta.name, 'foobar'
   

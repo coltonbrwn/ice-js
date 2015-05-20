@@ -1,11 +1,7 @@
 require('node-jsx').install({extension: '.jsx'});
 
 var ServerPage = require('../Page/serverPage.js'),
-    express = require('express'),
-    Backbone = require('backbone');
-
-// Override Backbone to use server-side sync
-Backbone.sync = require('backbone-super-sync');
+    express = require('express');
 
 var serverRouter = module.exports = function(iceRouter){
 
@@ -21,7 +17,11 @@ var serverRouter = module.exports = function(iceRouter){
     router.get(path, (function(handler){
       return function(req, res, next){
         var page = new ServerPage(req, res, header);
-        handler.call(this.router, page);
+        // apply these functions to each page
+        iceRouter.middleware.forEach(function(fn){
+          fn.call(iceRouter, page)
+        });
+        handler.call(iceRouter, page);
       };
     })(handlerFn));
 
