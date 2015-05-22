@@ -1,6 +1,7 @@
 var express = require('express'),
     fs = require('fs'),
     routers = require('./routers/index.js'),
+    easyRouter = require('./routers/easyRouter.js'),
     Ice = require('ice-js');
 
 var app = express();
@@ -11,11 +12,13 @@ app.get('/ice-assets/bundle.js', function(req, res){
       .pipe(res);
   }else{
     Ice.build(routers)
-      .pipe(res);
+      .pipe(res)
+      .pipe(fs.createWriteStream(__dirname+'/bundle.js'));
   }
 });
 
 app.use('/data', require('./data_api'));
+app.use(easyRouter.make());
 app.use(routers.exportServer());
 
 app.listen(3000, function(){

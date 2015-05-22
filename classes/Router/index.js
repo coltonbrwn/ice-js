@@ -1,12 +1,15 @@
 var util = require('../../lib/util.js'),
     serverRouter = require('./serverRouter.js'),
     clientRouter = require('./clientRouter.js'),
-    stack = require('callsite');
+    stack = require('callsite'),
+    build = require('../../lib/build.js'),
+    fs = require('fs');
 
-module.exports = Router = function(){
+var Router = module.exports = function(){
   this.entries = [];
-  this.location = stack()[1].getFileName();
+  this.filename = stack()[1].getFileName();
   this.middleware = [];
+  this.mountPoint = '';
 };
 
 Router.prototype.path = function(path, handler){
@@ -16,6 +19,9 @@ Router.prototype.path = function(path, handler){
 
   if (typeof path === 'string' && path[0] !== '/')
     path = '/'+path;
+
+  if (this.mountPoint !== '')
+    path = this.mountPoint + path;
 
   this.entries.push({
     path: path,
@@ -52,6 +58,33 @@ Router.prototype.all = function(handler){
   this.middleware.push(handler);
 };
 
+Router.prototype.make = function(opts){
+
+  var app = this.exportServer(),
+      buffers = [], 
+      htmlBuf;
+
+  var b = build({
+    routerPath: this.filename
+  }).on('data', function(d){
+    buffers.push(d);
+  }).on('end', function(){
+    htmlBuf = Buffer.concat(buffers);
+  });
+
+  app.get(this.mountPoint+'/ice-assets/bundle.js', function(req, res){
+    if(!htmlBuf){
+      b.pipe(res);
+    }else{
+      res.setHeader('Content-Type', 'application/javascript');
+      res.setHeader('Content-Length', htmlBuf.length);
+      res.write(htmlBuf);
+    }
+  });
+  
+  return app;
+};
+
 Router.prototype.exportClient = function(){
   global.ICE_ENV = 'client'
   return new clientRouter(this);
@@ -62,6 +95,6 @@ Router.prototype.exportServer = function(){
   return serverRouter(this);
 }
 
-Router.prototype.getLocation = function(){
-  return this.location;
+Router.prototype.getFilename = function(){
+  return this.filename;
 }

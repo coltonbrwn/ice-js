@@ -12,7 +12,7 @@ describe 'Test Router class', ->
     router = new Ice.Router()
 
   it 'should have all ice router methods', ->  
-    methods = ['path', 'use', 'exportClient', 'exportServer', 'getLocation']
+    methods = ['path', 'use', 'exportClient', 'exportServer', 'getFilename']
     methods.forEach (method) ->
       assert.equal typeof router[method], 'function',
         "method '#{method}' was not found"

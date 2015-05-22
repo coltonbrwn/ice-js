@@ -11,6 +11,12 @@ Monitor = (cb) ->
     called++
     if called == 2 then do cb
 
+cleanup = ->
+  fs.unlink "#{__dirname}/../app/bundle.js"
+  if child?.kill? then child.kill()
+
+process.on 'exit', cleanup
+
 before 'Make browserify bundle', (done) ->
 
   monitor = new Monitor(done)
@@ -33,9 +39,5 @@ before 'Make browserify bundle', (done) ->
   child.on 'message', (m) ->
     if m is 'listening' then do monitor.register()
 
-after 'Remove bundle', (done) ->
-  fs.unlink("#{__dirname}/../app/bundle.js", done)
-
-after 'Kill the test server', (done) ->
-  child.kill();
-  done();
+after 'Remove bundle, Kill the test server', ->
+  cleanup()

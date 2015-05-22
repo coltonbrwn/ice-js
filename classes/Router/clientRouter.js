@@ -7,10 +7,10 @@ module.exports = Backbone.Router.extend({
 
   initialize: function(iceRouter){
     this.iceRouter = iceRouter;
-    var router = this;
+    var backboneRouter = this;
     iceRouter.entries.forEach(function(entry){
       var pathString = entry.path;
-      router.route(pathString, entry.handler);
+      backboneRouter.route(pathString, entry.handler);
     });
   },
 
@@ -18,7 +18,7 @@ module.exports = Backbone.Router.extend({
 
     var keys = this._keysForPath(route)
     var routeRegexp = this._routeToRegExp(route);
-    var router = this;
+    var backboneRouter = this;
 
     IceHistory.route(routeRegexp, function(fragment, query) {
       
@@ -29,7 +29,7 @@ module.exports = Backbone.Router.extend({
         params[key.name] = args[i+1];
       });
 
-      router.execute(callback, params, query);
+      backboneRouter.execute(callback, params, query);
 
     });
 

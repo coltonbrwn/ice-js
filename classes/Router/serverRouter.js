@@ -6,7 +6,7 @@ var ServerPage = require('../Page/serverPage.js'),
 var serverRouter = module.exports = function(iceRouter){
 
   if (typeof iceRouter !== 'object') throw 'invalid router provided';
-  var router = new express.Router();
+  var expressRouter = new express.Router();
 
   iceRouter.entries.forEach(function(entry){
 
@@ -14,7 +14,7 @@ var serverRouter = module.exports = function(iceRouter){
     var handlerFn  = entry.handler;
     var header = entry.header;
 
-    router.get(path, (function(handler){
+    expressRouter.get(path, (function(handler){
       return function(req, res, next){
         var page = new ServerPage(req, res, header);
         // apply these functions to each page
@@ -32,6 +32,6 @@ var serverRouter = module.exports = function(iceRouter){
   //   page.error(404);
   // });
 
-  return router;
+  return expressRouter;
 
 }

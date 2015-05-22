@@ -14,12 +14,16 @@ _ = require('backbone/node_modules/underscore')
 
 module.exports = class MockClient
   constructor: (opts) ->
-    @jsEnabled = if opts.disableJavascript then false else 'script'
+    @jsEnabled =  !opts.disableJavascript
     @html      = if opts.disablePageFetch then dummyPage else undefined
     @bundle    =    opts.bundle   or ''
     @basePath  =    opts.basePath or ''
     @console   =    opts.consoleObj or false
     @config    =    opts.config or {}
+
+    @fetchExternal = if @jsEnabled and opts.fetchExternal isnt false then ["script"] else false
+    @processExternal = if @jsEnabled and opts.processExternal isnt false then ["script"] else false
+  
     return
 
   visit: (url, config, cb) ->
@@ -36,8 +40,8 @@ module.exports = class MockClient
       url: @basePath + url
       src: [@bundle]
       features:
-        FetchExternalResources: [@jsEnabled],
-        ProcessExternalResources: [@jsEnabled]
+        FetchExternalResources: @fetchExternal
+        ProcessExternalResources: @processExternal
       created: (error, window) =>
         if error then return cb(error, null)
         if @console
@@ -64,6 +68,7 @@ module.exports = class MockClient
 
 processJsdomErrors = (errors) ->
   if !errors then return undefined
+  console.log(errors);
   err = errors
   if errors.length?
     err = errors[0]
