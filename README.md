@@ -39,6 +39,10 @@ Ice.build(router)
 
 app.use('/ice-assets', express.static('./build'));
 ```
+If you're not using pure JavaScript, you can pass a browserify transform function to Ice.build:
+```javascript
+Ice.build({ router: router, transform: require('reactify') });
+```
 Together, the client and server components support an application that listens to the specified routes and pre-renders their responses on the server. Once the page loads, it executes `bundle.js` and re-renders the page client-side with javascript. The above is all the setup you'll need to do, the rest of this guide shows you how to take advantage of Ice classes.
 
 ###Ice.Router
