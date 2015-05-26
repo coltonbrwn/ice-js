@@ -10,7 +10,7 @@ app.get('/ice-assets/bundle.js', function(req, res){
     fs.createReadStream(__dirname+'/bundle.js')
       .pipe(res);
   }else{
-    Ice.build(routers)
+    Ice.build({router: routers, transform: require('reactify'), extensions: ['.jsx']})
       .pipe(res);
   }
 });

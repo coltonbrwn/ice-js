@@ -36,6 +36,7 @@
     "body-parser": "1.12.x",
     "coffee-script": "1.9.x",
     "jsdom": "3.x",
-    "mocha": "2.2.x"
+    "mocha": "^2.2.5",
+    "reactify": "^1.1.1"
   }
 }
