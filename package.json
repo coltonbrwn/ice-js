@@ -30,13 +30,13 @@
     "jquery": "^2.1.4",
     "node-jsx": "0.12.4",
     "react": "0.13.x",
-    "reactify": "1.1.x",
     "sharify": "0.1.x"
   },
   "devDependencies": {
     "body-parser": "1.12.x",
     "coffee-script": "1.9.x",
     "jsdom": "3.x",
-    "mocha": "2.2.x"
+    "mocha": "^2.2.5",
+    "reactify": "^1.1.1"
   }
 }

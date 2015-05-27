@@ -24,7 +24,11 @@ before 'Make browserify bundle', (done) ->
   console.log 'Building Application Bundle...\n'
   @timeout 15000
   router = require '../app/routers'
-  builder = Ice.build router
+  builder = Ice.build {
+    router: router, 
+    transform: require('reactify'), 
+    extensions: ['.jsx']
+  }
   builder.on 'error', (e) -> done(e)
   
   dest = fs.createWriteStream "#{__dirname}/../app/bundle.js"
