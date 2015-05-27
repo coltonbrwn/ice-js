@@ -22,7 +22,7 @@ before 'Make browserify bundle', (done) ->
   monitor = new Monitor(done)
 
   console.log 'Building Application Bundle...\n'
-  @timeout 5000
+  @timeout 15000
   router = require '../app/routers'
   builder = Ice.build router
   builder.on 'error', (e) -> done(e)
