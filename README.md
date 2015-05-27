@@ -1,14 +1,14 @@
-#Ice.js
+#Ice.js#
 [![NPM Version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
 
-####What it is
+####What it is####
 Ice is a small group of tools for making isomorphic MVC applications easy to build in javascript. It runs server-side on top of Express, and supports React for UI rendering. It allows you to write DRY, modular code using familiar APIs that run anywhere.
 
-####What it isn't
-Ice is not comprehensive framework and, since it aims to be Isomorphic, its features are limited to the things you can do within a browser. Therefore it has no methods for performing database access, shell commands, or anything I/O besides http. It just consumes data and renders it into views efficiently with Isomorphic techniques using as little code as possible.
+####What it isn't####
+Ice is not a comprehensive framework and, since it aims to be Isomorphic, its features are limited to the things you can do within a browser. Therefore it has support for performing database access, shell commands, or anything I/O besides http. It just consumes data and renders it into views efficiently with Isomorphic techniques using as little code as possible.
 
-##Using Ice
+##Using Ice##
 Define your application by creating an instance of `Ice.Router` and specifying paths and handlers. Here's a router for "Hello World":
 ```javascript
 //router.js
@@ -45,7 +45,7 @@ Ice.build({ router: router, transform: require('reactify') });
 ```
 Together, the client and server components support an application that listens to the specified routes and pre-renders their responses on the server. Once the page loads, it executes `bundle.js` and re-renders the page client-side with javascript. The above is all the setup you'll need to do, the rest of this guide shows you how to take advantage of Ice classes.
 
-###Ice.Router
+###Ice.Router###
 The Ice Router Class is inspired by express, and is composable. Like the express router, it has `use` and `all` functions for attaching other router instances together and create complex routing schemes that are separated into modules. You can also use express-style regexes, globs, and parameters within your route definitions. See the [full documentation]().
 ```javascript
 // router1.js
@@ -81,10 +81,10 @@ app.listen(3000);
 // accepts routes /foo/abXcd, /foo/HELLO, /lower/HELLO
 ```
 
-###Ice.Page
+###Ice.Page###
 Each route defined on a router gets a callback with a reference to a `page` object, which holds any `params` defined in routes, a `query` object, and cookies. You generally don't ever create instances of `Ice.Page`, because they are created for you by the router. While the `page` object's `render` function can accept strings, the real power of Ice comes when you supply `render` with React components:
 
-```
+```javascript
 var Greeting = React.createClass({
   render: function(){
     return <div>
@@ -132,7 +132,7 @@ module.exports = router;
 ```
 On the server, `populate` makes a call to `http://data-api.com/[id]` by delegating to Backbone.fetch, then bootstraps the response. On the client, `populate` fills the model with the bootstrapped data without having to make a network request. View the [full documentation]().
 
-##Examples
+##Examples##  
 coming soon...
 
 [travis-image]: https://travis-ci.org/coltonTB/ice-js.svg?branch=master
