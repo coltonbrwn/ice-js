@@ -48,6 +48,11 @@ Router.path('/query', function(page){
 Router.path('/queryMath', function(page){
   var q = page.query;
   page.render(q.a+q.b+q.c+q.d);
-})
+});
+
+Router.path('/status/:statusCode', function(page){
+  var statusCode = parseInt(page.params.statusCode);
+  page.status(statusCode).render(statusCode);
+});
 
 Router.use(require('./auxRouter.js'));

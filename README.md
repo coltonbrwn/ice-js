@@ -3,50 +3,48 @@
 [![Build Status][travis-image]][travis-url]
 
 ####What it is####
-Ice is a small group of tools for making isomorphic MVC applications easy to build in javascript. It runs server-side on top of Express, and supports React for UI rendering. It allows you to write DRY, modular code using familiar APIs that run anywhere.
+Ice is a small routing framework for making isomorphic MVC applications easy to build in javascript. It allows you to write DRY, modular and declarative code that runs happily on the client or server. 
 
 ####What it isn't####
-Ice is not a comprehensive framework and, since it aims to be Isomorphic, its features are limited to the things you can do within a browser. Therefore it has support for performing database access, shell commands, or anything I/O besides http. It just consumes data and renders it into views efficiently with Isomorphic techniques using as little code as possible.
+Ice is not a standalone solution for building web applications. It does not support any I/O besides HTTP, and it doesn't support sockets or have an extensive library. It just consumes data from an existing API and renders it into views efficiently and using as little code as possible.
 
 ##Using Ice##
 Define your application by creating an instance of `Ice.Router` and specifying paths and handlers. Here's a router for "Hello World":
 ```javascript
 //router.js
-var Ice = require('ice-js');
-var router = module.exports = new Ice.Router;
+var router = new require('ice-js').Router;
 
 router.path('/', function(page){
   page.render('Hello World!');
 });
+
+module.exports = router;
 ```
-To run this on the server, call the router's `exportServer` function and mount it onto an express app with `use`:
+
+Then just call `router.make()` and mount the router onto your Express server:
 ```javascript
 //index.js
 var app = require('express')(),
     router = require('./router.js');
     
-app.use(router.exportServer());
+app.use(router.make());
 app.listen(3000);
 ```
-To run on the client, you'll need to serve a bundled version of the router at `/ice-assets/bundle.js`, which Ice will automatically fetch and instantiate on pageload. Pass the router instance to `Ice.build`, and you'll get back the bundle file in the form of a [readable stream](https://nodejs.org/api/stream.html#stream_class_stream_readable) that you can write to disk then serve statically:
-```javascript
-var Ice = require('ice-js'),
-    router = require('./router.js'),
-    fs = require('fs');
-    
-Ice.build(router)
-  .pipe(fs.createWriteStream(__dirname+'/bundle.js'));
 
-app.use('/ice-assets', express.static('./build'));
-```
-If you're not using pure JavaScript, you can pass a browserify transform function to Ice.build:
-```javascript
-Ice.build({ router: router, transform: require('reactify') });
-```
-Together, the client and server components support an application that listens to the specified routes and pre-renders their responses on the server. Once the page loads, it executes `bundle.js` and re-renders the page client-side with javascript. The above is all the setup you'll need to do, the rest of this guide shows you how to take advantage of Ice classes.
+That's all you need to create a fully isomorphic javascript application with Ice! Below, you can learn more about the features of Ice and how to use them. Make sure to check out the [full docs][doc-link] and important [caveats](https://github.com/coltonTB/ice-js/blob/master/DOCS.md#caveats) about using Ice.
+
+
+*Ice is build on top the following open-source technologies:*
+
+[React](https://facebook.github.io/react/) &nbsp;|&nbsp;
+[Backbone.js](http://backbonejs.org/) &nbsp;|&nbsp;
+[Express.js](http://expressjs.com/) &nbsp;|&nbsp;
+[Browserify](http://browserify.org/)
+
+##Ice Class Overview##
 
 ###Ice.Router###
-The Ice Router Class is inspired by express, and is composable. Like the express router, it has `use` and `all` functions for attaching other router instances together and create complex routing schemes that are separated into modules. You can also use express-style regexes, globs, and parameters within your route definitions. See the [full documentation]().
+The Ice Router Class is inspired by express, and is composable. Like the express router, it has `use` and `all` functions for attaching other router instances together and create complex routing schemes that are separated into modules. You can also use express-style regexes, globs, and parameters within your route definitions. See the [full documentation](https://github.com/coltonTB/ice-js/blob/master/DOCS.md#router).
 ```javascript
 // router1.js
 var router = exports = new require('ice-js').Router;
@@ -105,7 +103,7 @@ express().use(router).listen(3000);
 ```
 ```GET localhost:3000/greet/tom   -->  <div>Hello tom !</div>```
 
-The `page` object works with the router to present a consistent api for dealing with the routes on either the client or server. The `render` function allows the `Ice.Router` class to serve as a fully-featured router for React. Check out the [full documentation]().
+The `page` object works with the router to present a consistent api for dealing with the routes on either the client or server. The `render` function allows the `Ice.Router` class to serve as a fully-featured router for React. Check out the [full documentation](https://github.com/coltonTB/ice-js/blob/master/DOCS.md#page).
 
 ###Ice.Model and Ice.Collection
 These classes are extensions of Backbone Models and Collections and behave very much the same way, but with added isomorphic features. Used together with `Ice.Router`, they provide automatic bootstrapping via the function `populate`, which has the same signature as `fetch`. Here's an example that uses an Ice Model to fetch data from an API by ID, then render it asynchronously:
@@ -130,11 +128,13 @@ router.path("/getData/:id", function(page){
 
 module.exports = router;
 ```
-On the server, `populate` makes a call to `http://data-api.com/[id]` by delegating to Backbone.fetch, then bootstraps the response. On the client, `populate` fills the model with the bootstrapped data without having to make a network request. View the [full documentation]().
+On the server, `populate` makes a call to `http://data-api.com/[id]` by delegating to Backbone.fetch, then bootstraps the response. On the client, `populate` fills the model with the bootstrapped data without having to make a network request. View the [full documentation](https://github.com/coltonTB/ice-js/blob/master/DOCS.md#model).
 
 ##Examples##  
 coming soon...
 
+
+[doc-link]: https://github.com/coltonTB/ice-js/blob/master/DOCS.md
 [travis-image]: https://travis-ci.org/coltonTB/ice-js.svg?branch=master
 [travis-url]: https://travis-ci.org/coltonTB/ice-js
 [npm-image]: https://img.shields.io/npm/v/ice-js.svg

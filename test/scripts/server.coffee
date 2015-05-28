@@ -92,3 +92,12 @@ describe 'Test Server', ->
         client.assertRender '/queryMath/?a=1&b=3&c=3&d=7'
           , '1337', done
 
+
+    describe 'status code', ->
+      it '/status/123 should have status 123', (done) ->
+        http.get 'http://localhost:3000/status/123', (res) ->
+          done assert.equal(res.statusCode, 123)
+
+      it '/status/456 should have status 456', (done) ->
+        http.get 'http://localhost:3000/status/456', (res) ->
+          done assert.equal(res.statusCode, 456)

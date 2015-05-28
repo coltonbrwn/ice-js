@@ -73,10 +73,10 @@ Router.prototype.make = function(opts){
   });
 
   app.get(this.mountPoint+'/ice-assets/bundle.js', function(req, res){
+    res.setHeader('Content-Type', 'application/javascript');
     if(!htmlBuf){
       b.pipe(res);
     }else{
-      res.setHeader('Content-Type', 'application/javascript');
       res.setHeader('Content-Length', htmlBuf.length);
       res.write(htmlBuf);
     }

@@ -7,10 +7,6 @@ module.exports = {
 
   Collection: require('./classes/Collection'),
 
-  Page: require('./classes/Page'),
-
-  History: require('./classes/History'),
-
   build: require('./lib/build.js'),
 
   data: require('sharify').data

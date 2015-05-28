@@ -36,6 +36,13 @@ Page.prototype.render = function(Component, initialProps){
 };
 
 
+Page.prototype.status = function(statusCode){
+  if (typeof statusCode !== 'number')
+    throw new Error('status must be an integer')
+  this._res.status(statusCode);
+  return this;
+}
+
 Page.prototype.getCookies = function(options){
   options = options || {};
   var str = this._req.headers.cookie || '';
@@ -54,7 +61,8 @@ Page.prototype.setHeader = function(headerFn){
   if (typeof headerFn === 'function') {
     this.headerDefs.push(headerFn);
   }else{
-    throw new Error('argument must be a function that returns (an array of) React Elements')
+    throw new Error('argument must be a function that '+
+      'returns (an array of) React Elements');
   }
 }
 

@@ -20,6 +20,9 @@ Page.prototype.render = function(Component, initialProps){
   if(window.onPageDone) window.onPageDone()
 };
 
+Page.prototype.status = function(statusCode){
+  return this;
+}
 
 Page.prototype.getCookies = function(options){
   options = options || {};

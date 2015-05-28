@@ -10,7 +10,6 @@ var Index = React.createClass({
         </head>
         <body>
           <div id="app"
-               className="container"
                dangerouslySetInnerHTML={{
                  __html: this.props.content
                }}
