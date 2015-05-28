@@ -12,7 +12,8 @@ Ice is not a standalone solution for building web applications. It does not supp
 Define your application by creating an instance of `Ice.Router` and specifying paths and handlers. Here's a router for "Hello World":
 ```javascript
 //router.js
-var router = new require('ice-js').Router;
+var Ice = require('ice-js'),
+    router = new Ice.Router;
 
 router.path('/', function(page){
   page.render('Hello World!');
@@ -47,7 +48,8 @@ That's all you need to create a fully isomorphic javascript application with Ice
 The Ice Router Class is inspired by express, and is composable. Like the express router, it has `use` and `all` functions for attaching other router instances together and create complex routing schemes that are separated into modules. You can also use express-style regexes, globs, and parameters within your route definitions. See the [full documentation](https://github.com/coltonTB/ice-js/blob/master/DOCS.md#router).
 ```javascript
 // router1.js
-var router = exports = new require('ice-js').Router;
+var Ice = require('ice-js'),
+    router = new Ice.Router;
 
 router.path('/ab*cd', function(page){
   page.render('OK');
@@ -60,7 +62,8 @@ module.exports = router;
 ```
 ```javascript
 // router2.js
-var router  = new require('ice-js').Router;
+var Ice = require('ice-js'),
+    router = new Ice.Router;
 
 router.path('/lower/:string', function(page){
   page.render(page.params.string.toLowerCase());
@@ -82,7 +85,7 @@ app.listen(3000);
 ###Ice.Page###
 Each route defined on a router gets a callback with a reference to a `page` object, which holds any `params` defined in routes, a `query` object, and cookies. You generally don't ever create instances of `Ice.Page`, because they are created for you by the router. While the `page` object's `render` function can accept strings, the real power of Ice comes when you supply `render` with React components:
 
-```javascript
+```jsx
 var Greeting = React.createClass({
   render: function(){
     return <div>
@@ -116,8 +119,8 @@ module.exports = Ice.Model.extend({
 ```
 ```javascript
 // router.js
-var DataModel = require('./dataModel.js')
-var router = new Ice.Router();
+var DataModel = require('./dataModel.js'),
+    router = new Ice.Router();
 
 router.path("/getData/:id", function(page){
   var model = new DataModel({id: page.params.id});
