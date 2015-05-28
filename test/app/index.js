@@ -12,9 +12,11 @@ app.get('/ice-assets/bundle.js', function(req, res){
       .pipe(res);
   }else{
     Ice.build({
-      router: routers, 
-      transform: require('reactify'), 
-      extensions: ['.jsx']
+      router: routers,
+      browserify:{
+        transform: require('reactify'), 
+        extensions: ['.jsx']
+      }
     }).pipe(res)
       .pipe(fs.createWriteStream(__dirname+'/bundle.js'));
   }

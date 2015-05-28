@@ -5,8 +5,9 @@ var express = require('express'),
 
 var app = express();
 
-var builder = Ice.build(router)
-   .pipe(fs.createWriteStream(__dirname+'/bundle.js'));
+var builder = Ice.build(router, {
+  transform: [require('reactify')]
+}).pipe(fs.createWriteStream(__dirname+'/bundle.js'));
 
 app.use('/ice-assets', express.static(__dirname));
 app.use('/data', require('../test/app/data_api'));

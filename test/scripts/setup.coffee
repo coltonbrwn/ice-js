@@ -26,8 +26,10 @@ before 'Make browserify bundle', (done) ->
   router = require '../app/routers'
   builder = Ice.build {
     router: router, 
-    transform: require('reactify'), 
-    extensions: ['.jsx']
+    browserify: {
+      transform: require('reactify'), 
+      extensions: ['.jsx']
+    }
   }
   builder.on 'error', (e) -> done(e)
   
