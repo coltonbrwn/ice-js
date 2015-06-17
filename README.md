@@ -1,6 +1,6 @@
 ---
 layout: main
-permalink: /
+permalink: /readme.html
 ---
 
 # Ice.js
