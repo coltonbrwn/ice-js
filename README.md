@@ -1,8 +1,3 @@
----
-layout: main
-permalink: /
----
-
 # Ice.js
 
 [![NPM Version][npm-image]][npm-url]

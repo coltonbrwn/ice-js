@@ -1,8 +1,3 @@
----
-layout: main
-permalink: /docs.html
----
-
 # Ice.js Full Documentation
 
 #### Contents
