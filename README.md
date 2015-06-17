@@ -153,7 +153,7 @@ On the server, `populate` makes a call to `http://data-api.com/[id]` by delegati
 coming soon...
 
 
-[doc-link]: https://github.com/coltonTB/ice-js/blob/master/DOCS.md
+[doc-link]: http://coltontb.github.io/ice-js/docs.html
 [travis-image]: https://travis-ci.org/coltonTB/ice-js.svg?branch=master
 [travis-url]: https://travis-ci.org/coltonTB/ice-js
 [npm-image]: https://img.shields.io/npm/v/ice-js.svg

@@ -5,7 +5,10 @@ permalink: /docs.html
 
 # Ice.js Full Documentation
 
+[back to readme](http://coltontb.github.io/ice-js/readme.html)
+
 #### Contents
+
 1. [Ice.Router](#router)
 1. [Page](#page)
 1. [Ice.Model](#model)
