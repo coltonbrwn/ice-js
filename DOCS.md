@@ -1,6 +1,11 @@
-#Ice.js Full Documentation#
+---
+layout: main
+permalink: /docs.html
+---
 
-####Contents####
+# Ice.js Full Documentation
+
+#### Contents
 1. [Ice.Router](#router)
 1. [Page](#page)
 1. [Ice.Model](#model)
@@ -10,9 +15,9 @@
 1. [How it works](#how)
 1. [Ice.js caveats](#caveats)
 
-##1. <span id="router">Ice.Router</span>##
+## 1. <span id="router">Ice.Router</span>
 
-###Router.path###
+### Router.path
 
 Define a rule for associating a url with a function handler
 
@@ -25,7 +30,7 @@ Define a rule for associating a url with a function handler
 Ice uses the same engine as Express.js to parse **path**, which means you can specifiy `:parameters` whose values will show up in `page.params`, and any of the other routing features found in [express](http://expressjs.com/guide/routing.html)
 
 
-###Router.use###
+### Router.use
 
 Merge an external router instance onto this one, absorbing all of the route definitions and their handlers.
 
@@ -36,13 +41,14 @@ Merge an external router instance onto this one, absorbing all of the route defi
 **router:** A router instance to be attached to the given router at **mountPoint**
 
 
-###Router.all###
+### Router.all
 
 Apply a function to every path, including those added with `use`
 
 `router.all(handler)`
 
 **handler:** A function with the signature `function(page)` that will be called before execution of the handler defined with `path`. This function can be called any number of times; handlers will be executed in the order they were registered. A good application of this is setting a stylesheet for all pages:
+
 
 ```javascript
 router.all(function(page){
@@ -53,32 +59,32 @@ router.all(function(page){
 ```
 
 
-###Router.make###
+### Router.make
 
 `router.make()`
 
 Create an Express router instance from the Ice router in 'easy mode' that manages the build process internally, removing the need to call `Ice.build` by hand. When this function executes, it will set up a route that serves the bundle file from memory. _Because of high memory usage, this way of building Ice is not reccomended for production projects. Future releases of Ice should have a more memory-efficient automatic build process._
 
 
-###Router.exportServer###
+### Router.exportServer
 
 `router.exportServer()`
 
 Create an Express router instance from the Ice router. Can be mounted onto an express app with `app.use(router)` where `router` is the `Ice.Router` instance. _Note: mounting the router instance at a mountPoint other than '/' ie: `app.use('/foo', router)` will not work_
 
 
-###Router.exportClient###
+### Router.exportClient
 
 `router.exportClient()`
 
 Create a Backbone router instance from the Ice router. There is no need to call this function, as it is already called within `Ice.Build`. Internally, when `exportClient` is called, a Backbone.Router instance is created, then `Ice.History.start()` is called which starts the router listening for url changes.
 
 
-##2. <span id="page">Page</span>##
+## 2. <span id="page">Page</span>
 
 A page instance is provided to every route handler. The idea is that when writing route handlers, you should stop thinking about the distinction between server and client, and imagine that the following functions and attributes are inherent parts of the 'page' that you are rendering
 
-###Page.render###
+### Page.render
 
 1. `page.render(component, props)`
 
@@ -87,7 +93,7 @@ A page instance is provided to every route handler. The idea is that when writin
 Render the React component or string to the page. The rendered entity will appear on the page in an elment with id "#app", which is a direct child of `<body>`. You should structure your application to flow from this top level component down to subcomponents that make up each page.
 
 
-###Page.status###
+### Page.status
 
 `page.status(statusCode)`
 
@@ -96,27 +102,27 @@ Sets the response code value.
 **statusCode** is an integer HTTP response code. Returns the Page instance, so it's chainable.
 
 
-###Page.getCookies###
+### Page.getCookies
 
 `page.getCookies()`
 
 Returns a raw cookie string with all cookies that are visible on the page. The result will look something like "foo-bar; fizz=buzz;"
 
 
-###Page.setCookie###
+### Page.setCookie
 
 `page.setCookie(name, value[, options])`
 
 Set a cookie on the page. **name** and **value** are strings, and **options** supports the following:
 
 
-###Page.visit###
+### Page.visit
 
 `page.visit(urlFragment)`
 
 Go to the specified urlFragment
 
-###Page.setHeader
+### Page.setHeader
 
 `page.setHeader(headerFn)`
 
@@ -134,11 +140,11 @@ page.setHeader(function(props){
 ```
 *In the future this method will be more flexible so as to not require the use of React*
 
-##3. <span id="model">Ice.Model</span>##
+## 3. <span id="model">Ice.Model</span>
 
 The `Ice.Model` class implements the same API as [Backbone.Model](http://backbonejs.org/#Model) with a few added features. You should familiarize yourself with the Backbone documentation if you are confused about how to use `Ice.Model`.
 
-###Model.populate###
+### Model.populate
 
 `model.populate(options)`
 
@@ -156,13 +162,13 @@ model.populate({
 **Note:** The `forwardCookies` option is available for `Model.fetch`, too
 
 
-###Model.request###
+### Model.request
 
 `model.request(opts)`
 
 Perform an arbitray ajax-style request while taking advantage of isomorphism and the `forwardCookies` option. Returns a [superagent](https://github.com/visionmedia/superagent) request object, so you'll have to call `end()` to make the request. *Note: in the future this will probably return a promise*
 
-#####Supported Options:#####
+##### Supported Options:
 + opts.url - the url of the request (required)
 + opts.method - the HTTP method that should be used (default: 'GET')
 + opts.data - an object that should be sent as JSON in the request body
@@ -180,29 +186,29 @@ Ice.Model.prototype.request({
 });
 ```
 
-###Model.getHash###
+### Model.getHash
 
 `model.getHash(opts)`
 
 This is an function that is used internally by `populate` to create a unique identifier for bootstrapped data. Generally you should not need to worry about this, but if you find you are getting warnings about bootstrapped data not being found, or if you are using a data source in which there is not a strict 1-to-1 mapping of resources and URLs, you might consider overriding it to something of your choosing. `getHash` is passed the request options object which should help to uniquely identify the request data. Should return a string.
 
-##4. <span id="collection">Ice.Collection</span>##
+## 4. <span id="collection">Ice.Collection</span>
 
 The `Ice.Collection` class implements the same API as [Backbone.Collection](http://backbonejs.org/#Collection) with a few added features. You should familiarize yourself with the Backbone documentation if you are confused about how to use `Ice.Collection`.
 
-###Collection.populate###
+### Collection.populate
 
 `collection.populate(options)`
 
 *See Model.populate*
 
-###Collection.request###
+### Collection.request
 
 `model.request(opts)`
 
 *See Model.populate*
 
-###Collection.getHash###
+### Collection.getHash
 
 `collection.getHash(opts)`
 
@@ -210,17 +216,17 @@ The `Ice.Collection` class implements the same API as [Backbone.Collection](http
 
 
 
-##5. <span id="iceBuild">Ice.build</span>##
+## 5. <span id="iceBuild">Ice.build</span>
 
 Accepts an instance of or reference to `Ice.Router`, returns a Node [Readable Stream](https://nodejs.org/api/stream.html#stream_class_stream_readable) of a client-ready script with all dependencies bundled. Uses [Browserify](https://github.com/substack/node-browserify).
 
-#####Syntax:#####
+##### Syntax:
 
 1. `Ice.build(router[, browserifyOpts])`
 
 1. `Ice.build(opts)`
 
-#####Supported Options:#####
+##### Supported Options:
 
 + `opts.routerPath`     - an absolute path pointing to an instance of Ice.Router
 + `opts.router`         - an instance of Ice.Router
@@ -229,7 +235,7 @@ Accepts an instance of or reference to `Ice.Router`, returns a Node [Readable St
 If you use the first syntax, the second argument will be passed directly to browserify.
 If you choose to use the second syntax, the browserify options should be nested under `browserify`
 
-#####Examples:#####
+##### Examples:
 
 ```javascript
 // First Syntax
@@ -253,39 +259,39 @@ Ice.build({
 ```
 
 
-##6. <span id="iceData">Ice.data</span>##
+## 6. <span id="iceData">Ice.data</span>
 
 Holds data that persists across the client and server. Can be used as a global variable for configuration or otherwise. 
 
 
-##7. <span id="how">How it Works</span>##
+## 7. <span id="how">How it Works</span>
 
 Some key features and an explanation of their implementation
 
-####Isomorphic Router####
+#### Isomorphic Router
 The Ice.Router [API](#router) exposes two important functions that make isomorphism possible - `exportServer` and `exportClient`. When you create an Ice.Router class instance, its job is simply to collect route definitions and their handlers. When you call either of the export functions, the router is used as a blueprint for creating a new instance of either a [Backbone Router](http://backbonejs.org/#Router), or an [Express Router](http://expressjs.com/4x/api.html#router). The Ice.Router instance doesn't actually run, it provides instructions for building a router that will run in the appropriate environment.
 
-####Isomorphic Page object####
+#### Isomorphic Page object
 Each route made with `router.path` is supplied a function handler with a reference to an instance of `Ice.Page`. The Page constructor switches depending on the context (client or server), but both client and server instances of Page expose an identical API. This is critical for providing compatibility with isomorphic code. On the server, each route is set up as an Express route with a handler that exposes a new Page instance with the `req` and `res` objects. On the client, the Backbone.Router and Backbone.History objects have been modified to register handlers that create page instances instead of the default behavoir.
 
-####Bootstrapped Models####
+#### Bootstrapped Models
 The Ice [Model](#model) and [Collection](#collection) classes are subclasses of [Backbone.Model](http://backbonejs.org/#Model) and [Backbone.Collection](http://backbonejs.org/#Collection). In addition to all Backbone methods, they also expose a 'populate' function which is exactly like `fetch`, but handles bootstrapping.
 
 Under the hood, when you call `populate()`, the Model/Collection will delegate to either `_fill` or `_initialFetch`, depending on the context (server or client). On the server, `_initialFetch` performs the usual fetch, but attaches the response to a global object (see [sharify](https://github.com/artsy/sharify)) which allows for the response data to be injected into the page when it is finally served to the client. On the client, `_fill` fills the model with any bootstrapped data it finds that matches the signature of the request. 
 
-####Build Process####
+#### Build Process
 The `Ice.build` function turns an `Ice.Router` instance into a single javascript file that will run in the browser. It uses [browserify](http://browserify.org) to bundle all dependencies of the application together, making sure to ignore all files that implement server-specific code.
 
 
-##8. <span id="caveats">Ice.js Caveats</span>##
+## 8. <span id="caveats">Ice.js Caveats</span>
 
 Ice was written to be flexible and modular, but there are some things you just can't do. One thing to keep in mind is that all of the setup code involving mounting a router instance onto Express is *not* part of the isomorphic application. The application is defined entirely by the Routers. Any code outside of a Router class will not be included in the application bundle.
 
 
-####Modular Routers####
+#### Modular Routers
 Any instance of `Ice.Router` that will be mounted onto an express server must be defined in its own module and `require`d into the scope of the Express app. 
 
-#####Correct:#####
+##### Correct:
 ```javascript
 //router.js
 var router = module.exports = new Ice.Router;
@@ -295,7 +301,7 @@ router.path('/', function(){...});
 app.use(require('./router.js').make());
 ```
 
-#####Incorrect:#####
+##### Incorrect:
 ```javascript
 //main.js
 var router new Ice.Router;
@@ -306,21 +312,21 @@ app.use(router.make());
 If you do it the second way, the bundler will try to browserify `main.js` which contains server code, and it will break.
 
 
-####Mounting onto express####
+#### Mounting onto express
 After calling `Router.exportServer` or `Router.make`, you must mount the router onto Express at the root location. This is because the client Router assumes the server Router has been mounted at '/'. Configuring the mountpoint to be anything else is outside the scope of the application and can't be accounted for.
 
-#####Correct:#####
+##### Correct:
 ```javascript
 app.use(router.make());
 ```
 
-#####Incorrect:#####
+##### Incorrect:
 ```javascript
 app.use('/foobar', router.make());
 ```
 
 
-####HTML Structure####
+#### HTML Structure
 Ice creates the HTML boilerplate for you. Each time you call `Page.render`, you'll be sending this to the client:
 
 ```html
@@ -335,7 +341,7 @@ Ice creates the HTML boilerplate for you. Each time you call `Page.render`, you'
 You have to use page.setHeader to modify the `<head>` element.
 
 
-####Consuming Data####
+#### Consuming Data
 The `Page` API is rather limited, as you may have noticed. Use Ice as a presentation layer on top of your application, not as a data source. Structure your application to have complete separation between view and presentation. You can do this in the same server instance with Express:
 
 ```javascript
@@ -352,5 +358,5 @@ app.listen(3000);
 
 ```
 
-####Top-level views####
+#### Top-level views
 Ice is designed to render top-level views who handle all further rendering and interaction on their own. Don't try to build any kind of view hierarchy in Ice, and don't write any interaction code in your route handlers. Use ice to pass data from an external data source into a master view.
