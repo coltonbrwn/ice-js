@@ -1,5 +1,5 @@
 ---
-personal_site_url: http://coltontbrown.com
+personal_site_url: http://test.coltontbrown.com:8080
 project_name: ice-js
 ---
 
@@ -15,6 +15,7 @@ project_name: ice-js
 <body>
 
   <div class="container">
+
     <div class="project-pg-header">
       <a class="name" href="{{page.personal_site_url}}">
         COLTON BROWN
@@ -24,7 +25,19 @@ project_name: ice-js
         / <span class="project-name">{{page.project_name}}</span>
       </span>
     </div>
+
+    <div class="project-pg-nav">
+      <ul>
+        <li><a href='/'>home</a></li>
+        <li><a href='/docs.html'>full docs</a></li>
+        <li>
+          <a href="http://github.com/coltonTB/{{page.project_name}}">view on github</a>
+        </li>
+      </ul>
+    </div>
+
     {{content}}
+
   </div>
 
   <div class="footer">
