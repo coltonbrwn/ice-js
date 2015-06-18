@@ -11,10 +11,26 @@ project_name: ice-js
   <link rel="stylesheet" type="text/css" href="{{page.personal_site_url}}/normal.css">
   <link rel="stylesheet" type="text/css" href="{{page.personal_site_url}}/style.css">
   <link rel="stylesheet" type="text/css" href="{{page.personal_site_url}}/prism/prism.css">
+  <style type="text/css">
+    .docs h2{
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 6px;
+    }
+    .docs p{
+      margin: 0.5em 1em;
+    }
+    .docs h5{
+      margin-left: 1em;
+    }
+    .docs :not(pre) > pre[class*="language-"], 
+    .docs pre > code[class*="language-"]{
+      margin-left: 1em;
+    }
+  </style>
 </head>
 <body>
 
-  <div class="container">
+  <div class="container docs">
 
     <div class="project-pg-header">
       <a class="name" href="{{page.personal_site_url}}">
@@ -27,13 +43,9 @@ project_name: ice-js
     </div>
 
     <div class="project-pg-nav">
-      <ul>
-        <li><a href='/'>home</a></li>
-        <li><a href='/docs.html'>full docs</a></li>
-        <li>
-          <a href="http://github.com/coltonTB/{{page.project_name}}">view on github</a>
-        </li>
-      </ul>
+      <a href='/'>home</a>
+      <a href='/docs.html'>full docs</a>
+      <a href="http://github.com/coltonTB/{{page.project_name}}">view on github</a>
     </div>
 
     {{content}}

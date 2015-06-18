@@ -5,8 +5,6 @@ permalink: /docs.html
 
 # Ice.js Full Documentation
 
-[back to readme](http://coltontb.github.io/ice-js/readme.html)
-
 #### Contents
 
 1. [Ice.Router](#router)
@@ -54,6 +52,7 @@ Apply a function to every path, including those added with `use`
 
 
 ```javascript
+
 router.all(function(page){
   page.setHeader(function(props){
     return ['link', {rel:'stylesheet', href:'/ice-assets/style.css'}]
@@ -66,14 +65,18 @@ router.all(function(page){
 
 `router.make()`
 
-Create an Express router instance from the Ice router in 'easy mode' that manages the build process internally, removing the need to call `Ice.build` by hand. When this function executes, it will set up a route that serves the bundle file from memory. _Because of high memory usage, this way of building Ice is not reccomended for production projects. Future releases of Ice should have a more memory-efficient automatic build process._
+Create an Express router instance from the Ice router in 'easy mode' that manages the build process internally, removing the need to call `Ice.build` by hand. When this function executes, it will set up a route that serves the bundle file from memory. 
+
+_Because of high memory usage, this way of building Ice is not reccomended for production projects. Future releases of Ice should have a more memory-efficient automatic build process._
 
 
 ### Router.exportServer
 
 `router.exportServer()`
 
-Create an Express router instance from the Ice router. Can be mounted onto an express app with `app.use(router)` where `router` is the `Ice.Router` instance. _Note: mounting the router instance at a mountPoint other than '/' ie: `app.use('/foo', router)` will not work_
+Create an Express router instance from the Ice router. Can be mounted onto an express app with `app.use(router)` where `router` is the `Ice.Router` instance. 
+
+_Note: mounting the router instance at a mountPoint other than '/' ie: `app.use('/foo', router)` will not work_
 
 
 ### Router.exportClient
@@ -89,9 +92,9 @@ A page instance is provided to every route handler. The idea is that when writin
 
 ### Page.render
 
-1. `page.render(component, props)`
+`page.render(component, props)`
 
-1. `page.render(string)`
+`page.render(string)`
 
 Render the React component or string to the page. The rendered entity will appear on the page in an elment with id "#app", which is a direct child of `<body>`. You should structure your application to flow from this top level component down to subcomponents that make up each page.
 
@@ -172,13 +175,19 @@ model.populate({
 Perform an arbitray ajax-style request while taking advantage of isomorphism and the `forwardCookies` option. Returns a [superagent](https://github.com/visionmedia/superagent) request object, so you'll have to call `end()` to make the request. *Note: in the future this will probably return a promise*
 
 ##### Supported Options:
-+ opts.url - the url of the request (required)
-+ opts.method - the HTTP method that should be used (default: 'GET')
-+ opts.data - an object that should be sent as JSON in the request body
-+ opts.forwardCookies - raw cookies to be included in the request
+
+`opts.url` - the url of the request (required)
+
+`opts.method` - the HTTP method that should be used (default: 'GET')
+
+`opts.data` - an object that should be sent as JSON in the request body
+
+`opts.forwardCookies` - raw cookies to be included in the request
 
 For example (inside a route handler with `page` defined):
+
 ```javascript
+
 Ice.Model.prototype.request({
   url: 'http://localhost:3000/data/me',
   method: 'GET',
@@ -225,15 +234,18 @@ Accepts an instance of or reference to `Ice.Router`, returns a Node [Readable St
 
 ##### Syntax:
 
-1. `Ice.build(router[, browserifyOpts])`
+`Ice.build(router[, browserifyOpts])`
 
-1. `Ice.build(opts)`
+`Ice.build(opts)`
 
 ##### Supported Options:
 
-+ `opts.routerPath`     - an absolute path pointing to an instance of Ice.Router
-+ `opts.router`         - an instance of Ice.Router
-+ `opts.browserify`     - options that will be passed directly into [browserify](https://github.com/substack/node-browserify#browserifyfiles--opts)
+`opts.routerPath`     - an absolute path pointing to an instance of Ice.Router
+
+`opts.router`         - an instance of Ice.Router
+
+`opts.browserify`     - options that will be passed directly into [browserify](https://github.com/substack/node-browserify#browserifyfiles--opts)
+
 
 If you use the first syntax, the second argument will be passed directly to browserify.
 If you choose to use the second syntax, the browserify options should be nested under `browserify`

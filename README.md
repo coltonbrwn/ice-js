@@ -45,7 +45,7 @@ app.listen(3000);
 That's all you need to create a fully isomorphic javascript application with Ice! Below, you can learn more about the features of Ice and how to use them. Make sure to check out the [full docs][doc-link] and important [caveats](https://github.com/coltonTB/ice-js/blob/master/DOCS.md#caveats) about using Ice.
 
 
-*Ice is build on top the following open-source technologies:*
+Ice is build on top the following open-source technologies:
 
 [React](https://facebook.github.io/react/) &nbsp;|&nbsp;
 [Backbone.js](http://backbonejs.org/) &nbsp;|&nbsp;
