@@ -96,7 +96,7 @@ A page instance is provided to every route handler. The idea is that when writin
 
 `page.render(string)`
 
-Render the React component or string to the page. The rendered entity will appear on the page in an elment with id "#app", which is a direct child of `<body>`. You should structure your application to flow from this top level component down to subcomponents that make up each page.
+Render the React component or string to the page. The rendered entity will appear on the page in an elment with id `#app`, which is a direct child of `<body>`. You should structure your application to flow from this top level component down to subcomponents that make up each page.
 
 
 ### Page.status
@@ -112,14 +112,16 @@ Sets the response code value.
 
 `page.getCookies()`
 
-Returns a raw cookie string with all cookies that are visible on the page. The result will look something like "foo-bar; fizz=buzz;"
+Returns a raw cookie string with all cookies that are visible on the page. The result will take the form of 
+
+"foo-bar; fizz=buzz;"
 
 
 ### Page.setCookie
 
 `page.setCookie(name, value[, options])`
 
-Set a cookie on the page. **name** and **value** are strings, and **options** supports the following:
+Set a cookie on the page. `name` and `value` are strings, and `options` supports the following:
 
 
 ### Page.visit
@@ -281,7 +283,7 @@ Holds data that persists across the client and server. Can be used as a global v
 
 ## 7. <span id="how">How it Works</span>
 
-Some key features and an explanation of their implementation
+Essentially, Ice works by exposing a limited but consistent API that is implemented independently on both the client and server. It uses Browserify to allow Node.js-style code to run on the client, and includes a number of libraries that have been modified to work the same in both environments. When you create and modify a `Router` instance, you are only describing how you want the application to behave. At runtime (on the server) or compile-time (when building the client application), these instructions are translated into the necessary code to reproduce the specified behavior in the appropriate environment. 
 
 #### Isomorphic Router
 The Ice.Router [API](#router) exposes two important functions that make isomorphism possible - `exportServer` and `exportClient`. When you create an Ice.Router class instance, its job is simply to collect route definitions and their handlers. When you call either of the export functions, the router is used as a blueprint for creating a new instance of either a [Backbone Router](http://backbonejs.org/#Router), or an [Express Router](http://expressjs.com/4x/api.html#router). The Ice.Router instance doesn't actually run, it provides instructions for building a router that will run in the appropriate environment.

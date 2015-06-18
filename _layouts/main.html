@@ -17,7 +17,7 @@ project_name: ice-js
       padding-bottom: 6px;
     }
     .docs p{
-      margin: 0.5em 1em;
+      margin: 0.5em 0 0.5em 1em;
     }
     .docs h5{
       margin-left: 1em;
@@ -25,6 +25,9 @@ project_name: ice-js
     .docs :not(pre) > pre[class*="language-"], 
     .docs pre > code[class*="language-"]{
       margin-left: 1em;
+    }
+    .docs h1 + p{
+      margin: 0;
     }
   </style>
 </head>
@@ -43,8 +46,8 @@ project_name: ice-js
     </div>
 
     <div class="project-pg-nav">
-      <a href='/'>home</a>
-      <a href='/docs.html'>full docs</a>
+      <a href='/{{page.project_name}}'>home</a>
+      <a href='/{{page.project_name}}/docs.html'>full docs</a>
       <a href="http://github.com/coltonTB/{{page.project_name}}">view on github</a>
     </div>
 
